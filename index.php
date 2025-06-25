@@ -187,52 +187,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
                 <div class="empty-state">
                     <p>Publique a sua notícia, acessando o portal!</p>
                 </div>
-            <?php else: ?>
-                <div class="news-grid">
-                    <?php foreach ($todas_noticias as $noticia): ?>
-                        <article class="news-card" onclick="abrirModalNoticia(<?php echo htmlspecialchars(json_encode($noticia)); ?>, '<?php echo htmlspecialchars($usuario->lerPorId($noticia['autor'])['nome'] ?? 'Autor desconhecido'); ?>', '<?php echo htmlspecialchars($categoria->lerPorId($noticia['categoria'])['nome'] ?? 'Sem categoria'); ?>')">
-                            <?php if (!empty($noticia['imagem'])): ?>
-                                <div class="news-image">
-                                    <?php
-                                    $img = ltrim($noticia['imagem'], '@');
-                                    if (strpos($img, 'http') === 0) {
-                                        $src = $img;
-                                    } else {
-                                        $src = 'uploads/' . $img;
-                                    }
-                                    ?>
-                                    <img src="<?php echo htmlspecialchars($src); ?>" alt="<?php echo htmlspecialchars($noticia['titulo']); ?>">
-                                </div>
-                            <?php endif; ?>
-                            <div class="news-content">
-                                <h3 class="news-title"><?php echo htmlspecialchars($noticia['titulo']); ?></h3>
-                                <p class="news-excerpt"><?php echo htmlspecialchars(substr($noticia['noticia'], 0, 150)) . '...'; ?></p>
-                                <div class="news-meta">
-                                    <div class="news-meta-top">
-                                        <span class="news-author">
-                                            <i class="fas fa-user"></i>
-                                            <?php 
-                                                $autor = $usuario->lerPorId($noticia['autor']);
-                                                echo htmlspecialchars($autor['nome'] ?? 'Autor desconhecido');
-                                            ?>
-                                        </span>
-                                        <span class="news-date">
-                                            <i class="fas fa-calendar"></i>
-                                            <?php echo date('d/m/Y', strtotime($noticia['data'])); ?>
-                                        </span>
-                                    </div>
-                                    <span class="news-category">
-                                        <i class="fas fa-tag"></i>
-                                        <?php 
-                                            $cat = $categoria->lerPorId($noticia['categoria']);
-                                            echo htmlspecialchars($cat['nome'] ?? 'Sem categoria');
-                                        ?>
-                                    </span>
-                                </div>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                </div>
             <?php endif; ?>
         </section>
 
