@@ -1,0 +1,11 @@
+alterar.php
+alterarNoticia.php
+cadastrarNoticia.php
+registrar.php
+portal.php
+
+alterar.js
+alterarNoticia.js
+cadastrarNoticia.js
+registrar.js
+portal.js

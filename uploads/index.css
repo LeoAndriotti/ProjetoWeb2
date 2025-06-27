@@ -1,0 +1,325 @@
+.login-btn {
+    background: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-left: auto;
+}
+
+.login-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.currency-ticker {
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    padding: 0.8rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ticker-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    width: 100%;
+}
+
+.ticker-items {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    padding: 0.5rem 1rem 0.5rem 0;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.ticker-item i {
+    font-size: 1.2rem;
+    color: #3498db;
+    transition: all 0.3s ease;
+}
+
+.currency-name {
+    font-weight: 600;
+    color: #3498db;
+    transition: all 0.3s ease;
+}
+
+.currency-value {
+    font-weight: 500;
+    color: #2ecc71;
+    transition: all 0.3s ease;
+}
+
+.ticker-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.ticker-item:nth-child(1):hover i,
+.ticker-item:nth-child(1):hover .currency-name {
+    color: #2ecc71;
+}
+
+.ticker-item:nth-child(2):hover i,
+.ticker-item:nth-child(2):hover .currency-name {
+    color: #3498db;
+}
+
+.ticker-item:nth-child(3):hover i,
+.ticker-item:nth-child(3):hover .currency-name {
+    color: #f39c12;
+}
+
+.ticker-item:nth-child(4):hover i,
+.ticker-item:nth-child(4):hover .currency-name {
+    color: #e74c3c;
+}
+
+.main-header {}
+.header-content {
+    padding-top: 100px;
+}
+
+.news-container {}
+.featured-news {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.featured-news h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.empty-state {
+    text-align: center;
+    color: white;
+    padding: 3rem 0;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #ecf0f1;
+}
+
+.empty-state p:first-child {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.ultimas-noticias {}
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.news-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    padding-bottom: 2.5rem;
+    cursor: pointer;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.news-card:active {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.05);
+}
+
+.news-content {
+    padding: 1.5rem;
+}
+
+.news-title {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.news-excerpt {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.news-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    gap: 0.8rem;
+}
+
+.news-meta-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.news-author, .news-date {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.news-author i, .news-date i {
+    color: #3498db;
+}
+
+.news-category {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f8f9fa;
+    padding: 0.3rem 1.2rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    justify-content: center;
+}
+
+.news-category:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.news-category i {
+    color: #2ecc71;
+}
+
+@media (max-width: 768px) {
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .news-card {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .news-meta-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .news-author, .news-date {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
+.hamburger {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        margin-right: 6px;
+        cursor: pointer;
+    }
+    @media (max-width: 768px) {
+        .currency-ticker {
+            display: flex;
+            align-items: center;
+        }
+        .hamburger {
+            display: block;
+        }
+        .ticker-content {
+            display: none;
+            position: absolute;
+            top: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #222;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 6px 8px 8px 8px;
+            min-width: 150px;
+            max-width: 90vw;
+            text-align: center;
+        }
+        .ticker-content.active {
+            display: block;
+        }
+        .ticker-items {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .ticker-item {
+            font-size: 0.85rem;
+            width: 100%;
+        }
+        .login-btn {
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 2px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            padding: 4px 0;
+        }
+    }
