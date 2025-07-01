@@ -1,0 +1,600 @@
+.portal-header-portal {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-bottom: 3px solid #3498db;
+    position: relative;
+    overflow: hidden;
+}
+
+.portal-header-portal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Logo personalizado */
+.portal-logo-img {
+    width: 150px !important;
+    height: 130px !important;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.portal-logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Cabeçalho do portal */
+.portal-header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.portal-header-content h1 {
+    color: #ecf0f1;
+    font-size: 2rem;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.saudacao-portal {
+    color: #3498db;
+    font-weight: 700;
+}
+
+/* Navegação personalizada */
+.portal-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.portal-nav a {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.portal-nav a:hover {
+    background: white;
+    color: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+}
+
+.portal-nav a i {
+    font-size: 1.1rem;
+}
+
+/* Container principal */
+.portal-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Card do formulário personalizado */
+.form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #3498db, #3498db);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Título do formulário */
+.form-card h2 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #ecf0f1;
+    position: relative;
+}
+
+.form-card h2 i {
+    color: #3498db;
+    margin-right: 0.5rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Grupos de formulário */
+.news-form .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.news-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.news-form label i {
+    color: #3498db;
+    margin-right: 0.5rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Campos de entrada */
+.news-form input[type="text"],
+.news-form textarea,
+.news-form select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.news-form textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.news-form input[type="text"]:focus,
+.news-form textarea:focus,
+.news-form select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+    background: white;
+    transform: translateY(-1px);
+}
+
+/* Estilos para campos válidos/inválidos */
+.news-form input.valid,
+.news-form textarea.valid,
+.news-form select.valid {
+    border-color: #27ae60;
+    background: rgba(39, 174, 96, 0.05);
+}
+
+.news-form input.invalid,
+.news-form textarea.invalid,
+.news-form select.invalid {
+    border-color: #3498db;
+    background: rgba(231, 76, 60, 0.05);
+}
+
+/* Container de upload de imagem */
+.image-upload-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+/* Imagem atual */
+.current-image {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(230, 126, 34, 0.05);
+    border-radius: 8px;
+    border: 2px dashed rgba(230, 126, 34, 0.3);
+}
+
+.current-image img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.current-image img:hover {
+    transform: scale(1.05);
+}
+
+.current-image p {
+    margin-top: 0.5rem;
+    color: #3498db;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Nova imagem */
+.new-image {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(52, 152, 219, 0.05);
+    border-radius: 8px;
+    border: 2px dashed rgba(52, 152, 219, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.new-image:hover {
+    background: rgba(52, 152, 219, 0.1);
+    border-color: rgba(52, 152, 219, 0.5);
+}
+
+.new-image input[type="file"] {
+    display: none;
+}
+
+.image-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 120px;
+    justify-content: center;
+}
+
+.image-preview i {
+    font-size: 2rem;
+    color: #3498db;
+    margin-bottom: 0.5rem;
+}
+
+.image-preview p {
+    color: #3498db;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Contadores de caracteres */
+.char-counter {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+    transition: color 0.3s ease;
+}
+
+.char-counter.warning {
+    color: #3498db;
+}
+
+.char-counter.danger {
+    color: #3498db;
+}
+
+/* Ações do formulário */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    justify-content: center;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #e67e22, #f39c12);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #7f8c8d, #95a5a6);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+}
+
+.btn i {
+    font-size: 1.1rem;
+}
+
+/* Mensagens de erro */
+.error-message {
+    background: #3498db;
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    border-left: 4px solid #3498db;
+    transition: opacity 0.5s ease;
+}
+
+.error-message i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Tooltips personalizados */
+.news-form input[title]:hover::after,
+.news-form textarea[title]:hover::after,
+.news-form select[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .portal-container {
+        margin: 1rem;
+        padding: 0;
+    }
+    
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .form-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .image-upload-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .portal-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .portal-nav a {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .portal-logo-img {
+        width: 100px !important;
+        height: 80px !important;
+    }
+    
+    .portal-header-content h1 {
+        font-size: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-card {
+        padding: 1rem;
+    }
+    
+    .news-form input[type="text"],
+    .news-form textarea,
+    .news-form select {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animações de entrada */
+.form-card {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito de loading no botão */
+.btn-primary.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-primary.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Hover effects para ícones */
+.news-form label i:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+/* Efeito de destaque para campos obrigatórios */
+.news-form .form-group:has(input[required]) label::after,
+.news-form .form-group:has(textarea[required]) label::after,
+.news-form .form-group:has(select[required]) label::after {
+    content: ' *';
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Estilos específicos para textarea */
+.news-form textarea {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+/* Estilos para select personalizado */
+.news-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e67e22' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+/* Estilos para placeholder */
+.news-form input::placeholder,
+.news-form textarea::placeholder {
+    color: #95a5a6;
+    opacity: 0.7;
+}
+
+.news-form input:focus::placeholder,
+.news-form textarea:focus::placeholder {
+    opacity: 0.3;
+}
+
+/* Estilos para nova imagem preview */
+.new-image-preview {
+    text-align: center;
+}
+
+.new-image-preview img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.new-image-preview img:hover {
+    transform: scale(1.05);
+}
+
+.remove-new-image {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.remove-new-image:hover {
+    background: #3498db;
+    transform: translateY(-1px);
+}

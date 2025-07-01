@@ -3,7 +3,12 @@
         <i class="fas fa-bars"></i>
     </button>
     <div class="ticker-content" id="ticker-content">
+        
         <div class="ticker-items">
+              <!-- Componente de Previsão do Tempo -->
+         <div>
+        <?php echo renderizarPrevisaoTempo('São Paulo', 'BR'); ?>
+        </div>
             <div class="ticker-item">
                 <i class="fas fa-dollar-sign"></i>
                 <span class="currency-name">USD</span>

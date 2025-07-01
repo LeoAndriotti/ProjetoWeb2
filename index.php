@@ -1,4 +1,5 @@
 <?php
+include_once 'components/previsao_tempo.php';
 // Inicia a sessão para controle de login
 session_start();
 // Inclui arquivos de configuração e classes principais
@@ -50,16 +51,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     <!-- Estilos principais do site -->
     <link rel="stylesheet" href="./uploads/style.css">
     <link rel="stylesheet" href="./uploads/Index.css">
+    <link rel="stylesheet" href="./uploads/previsao_tempo.css">
     <!-- Scripts da página inicial -->
     <script src="./scripts/Index.js"></script>
+    <!-- Script de atualização de moedas -->
+    <script src="./scripts/moedas.js"></script>
+    <script src="./scripts/previsao_tempo.js"></script>
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 
 <body class="portal-body">
-    <!-- Menu de moedas (reutilizável) -->
-    <?php include './components/moedas.php'; ?>
+    
+    <!-- Container flexível para previsão do tempo e moedas -->
+    <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
+        
+        <?php include './components/moedas.php'; ?>
+       
+    </div>
+
     <!-- Botão de login fixo no topo direito -->
     <a href="logar.php" class="login-btn" style="position: absolute; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
 

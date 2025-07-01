@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Adicionar Usuário - CSL Times</title>
     <link rel="stylesheet" href="./uploads/style.css">
+    <link rel="stylesheet" href="./uploads/registrar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
@@ -50,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- ====== FORMULÁRIO DE REGISTRO ====== -->
     <div class="form-card">
         <?php if (!empty($erro)): ?>
-            <div class="error-message" style="background-color: #ffebee; color: #c62828; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #ffcdd2;">
+            <div class="error-message">
                 <i class="fas fa-exclamation-circle"></i> <?php echo $erro; ?>
             </div>
         <?php endif; ?>
         
         <?php if (!empty($sucesso)): ?>
-            <div class="success-message" style="background-color: #e8f5e8; color: #2e7d32; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c8e6c9;">
+            <div class="success-message">
                 <i class="fas fa-check-circle"></i> <?php echo $sucesso; ?>
             </div>
         <?php endif; ?>
@@ -108,26 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <!-- ====== SCRIPTS ====== -->
-    <script>
-        const foneInput = document.getElementById('fone');
-
-        foneInput.addEventListener('input', function(e) {
-            let valor = e.target.value;
-
-            valor = valor.replace(/\D/g, '');
-
-            valor = valor.slice(0, 11);
-
-            if (valor.length > 6) {
-                valor = valor.replace(/^(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-            } else if (valor.length > 2) {
-                valor = valor.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-            } else if (valor.length > 0) {
-                valor = valor.replace(/^(\d*)/, '($1');
-            }
-
-            e.target.value = valor;
-        });
-    </script>
+    <script src="./scripts/registrar.js"></script>
 </body>
 </html>

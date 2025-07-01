@@ -1,0 +1,166 @@
+.previsao-tempo-simples {
+    display: flex;
+    align-items: center;
+    background: rgba(44, 62, 80, 0.95);
+    border-radius: 30px;
+    padding: 6px 18px;
+    font-size: 0.95rem;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+    margin-right: 8px;
+    gap: 8px;
+    min-width: 0;
+    max-width: 180px;
+}
+
+.previsao-tempo-simples .icone-tempo {
+    font-size: 1.3em;
+    margin-right: 6px;
+}
+
+.previsao-tempo-simples .temperatura {
+    font-size: 1em;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.previsao-tempo-simples .cidade {
+    font-size: 0.95em;
+    color: #b2bec3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70px;
+}
+
+.previsao-tempo-simples .previsao-5dias {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 10px;
+    z-index: 1000;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.previsao-tempo-simples:hover .previsao-5dias {
+    display: flex;
+}
+
+.previsao-tempo-simples:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.previsao-tempo-simples.erro {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.3);
+}
+
+.previsao-tempo-simples.carregando {
+    opacity: 0.7;
+}
+
+.previsao-tempo-simples.carregando .icone-tempo {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Previsão de 5 dias */
+.previsao-5dias {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    min-width: 300px;
+}
+
+.dia-previsao {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px 12px;
+    text-align: center;
+    min-width: 50px;
+    transition: all 0.3s ease;
+}
+
+.dia-previsao:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.dia-previsao .dia {
+    font-size: 0.7rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.dia-previsao .icone {
+    font-size: 1.2rem;
+    margin: 4px 0;
+}
+
+.dia-previsao .temp {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .previsao-tempo-simples {
+        padding: 10px 16px;
+        gap: 10px;
+        max-width: 180px;
+    }
+    
+    .icone-tempo {
+        font-size: 1.6rem;
+    }
+    
+    .temperatura {
+        font-size: 1.1rem;
+    }
+    
+    .cidade {
+        font-size: 0.8rem;
+        max-width: 70px;
+    }
+    
+    .previsao-5dias {
+        gap: 6px;
+    }
+    
+    .dia-previsao {
+        padding: 6px 8px;
+        min-width: 40px;
+    }
+    
+    .dia-previsao .dia {
+        font-size: 0.6rem;
+    }
+    
+    .dia-previsao .icone {
+        font-size: 1rem;
+    }
+    
+    .dia-previsao .temp {
+        font-size: 0.7rem;
+    }
+    
+    .previsao-tempo-simples .previsao-5dias {
+        min-width: 250px;
+        padding: 12px;
+    }
+} 

@@ -47,51 +47,9 @@ function saudacao() {
     <meta charset="UTF-8">
     <title>CSL Times - Portal</title>
     <link rel="stylesheet" href="./uploads/style.css">
+    <link rel="stylesheet" href="./uploads/portal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
-    <style>
-    @media (max-width: 768px) {
-        .portal-header {
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
-        }
-        .portal-nav {
-            width: 100%;
-            justify-content: center;
-        }
-        .portal-table {
-            display: block;
-            overflow-x: auto;
-        }
-        .form-card, .portal-form {
-            padding: 1rem !important;
-            max-width: 98vw !important;
-        }
-        .form-header h2 {
-            font-size: 1.2rem;
-        }
-        .form-header i {
-            font-size: 1.5rem;
-        }
-        .news-grid {
-            grid-template-columns: 1fr !important;
-            gap: 1rem !important;
-        }
-        .news-card {
-            max-width: 98vw !important;
-            margin: 0 auto !important;
-        }
-        .modal-noticia-content {
-            width: 98vw !important;
-            max-width: 98vw !important;
-            padding: 1rem !important;
-        }
-        .modal-noticia-header h2 {
-            font-size: 1.2rem !important;
-        }
-    }
-    </style>
 </head>
 <body class="portal-body">
     <!-- ====== CABEÇALHO DO PORTAL ====== -->
@@ -116,7 +74,10 @@ function saudacao() {
             </div>
         <?php else: ?>
             <div class="news-grid">
-                <?php foreach ($noticias_usuario as $noticia): ?>
+                <?php foreach ($noticias_usuario as $noticia): 
+                    $cat = $categoria->lerPorId($noticia['categoria']);
+                    $noticia['categoria_nome'] = $cat['nome'] ?? 'Sem categoria';
+                ?>
                     <article class="news-card" onclick="abrirModalNoticia(<?php echo htmlspecialchars(json_encode($noticia)); ?>)">
                         <?php if (!empty($noticia['imagem'])): ?>
                             <div class="news-image">
@@ -170,81 +131,6 @@ function saudacao() {
         </div>
     </div>
 
-    <!-- ====== SCRIPTS ====== -->
-    <script>
-        function abrirModalNoticia(noticia) {
-            const modal = document.getElementById('modalNoticia');
-            const modalContent = document.getElementById('modalNoticiaContent');
-            
-            // Formatar a data
-            const data = new Date(noticia.data);
-            const dataFormatada = data.toLocaleDateString('pt-BR');
-            
-            // Determinar a URL da imagem
-            let imgSrc = '';
-            if (noticia.imagem) {
-                const img = noticia.imagem.startsWith('@') ? noticia.imagem.substring(1) : noticia.imagem;
-                if (img.startsWith('http')) {
-                    imgSrc = img;
-                } else {
-                    imgSrc = 'uploads/' + img;
-                }
-            }
-            
-            let html = `
-                <div class="modal-noticia-header">
-                    <h2>${noticia.titulo}</h2>
-                    <div class="modal-noticia-meta">
-                        <span class="modal-noticia-date">
-                            <i class="fas fa-calendar"></i> ${dataFormatada}
-                        </span>
-                        <span class="modal-noticia-category">
-                            <i class="fas fa-tag"></i> 
-                            <?php 
-                                $cat = $categoria->lerPorId($noticia.categoria);
-                                echo htmlspecialchars($cat['nome'] ?? 'Sem categoria');
-                            ?>
-                        </span>
-                    </div>
-                </div>
-            `;
-            
-            if (imgSrc) {
-                html += `
-                    <div class="modal-noticia-image">
-                        <img src="${imgSrc}" alt="${noticia.titulo}">
-                    </div>
-                `;
-            }
-            
-            html += `
-                <div class="modal-noticia-body">
-                    <p>${noticia.noticia}</p>
-                </div>
-            `;
-            
-            modalContent.innerHTML = html;
-            modal.style.display = 'flex';
-        }
-
-        function fecharModalNoticia() {
-            document.getElementById('modalNoticia').style.display = 'none';
-        }
-
-        // Fechar modal ao clicar fora
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('modalNoticia');
-            if (event.target === modal) {
-                fecharModalNoticia();
-            }
-        });
-
-        // Fechar modal com ESC
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                fecharModalNoticia();
-            }
-        });
-    </script>
+    <script src="./scripts/portal.js"></script>
 </body>
 </html>

@@ -48,6 +48,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./uploads/style.css">
+    <link rel="stylesheet" href="./uploads/cadastrarNoticia.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
@@ -55,7 +56,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body class="portal-body">
     <!-- ====== CABEÇALHO ====== -->
     <div class="portal-header">
-    <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 140px; height: 120px;">
+    <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img">
 
         <div class="portal-nav">
             <a href="portal.php"><i class="fas fa-arrow-left"></i> Voltar ao Portal</a>
@@ -134,7 +135,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                     </div>
                     <div style="margin-top: 1rem;">
-                        <input type="url" name="imagem_url" id="imagem_url" placeholder="Ou cole a URL da imagem aqui" style="width:100%;padding:0.8rem;border-radius:5px;border:1px solid #e0e0e0;">
+                        <input type="url" name="imagem_url" id="imagem_url" placeholder="Ou cole a URL da imagem aqui">
                     </div>
                 </div>
 
@@ -145,9 +146,6 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-    <!-- ====== SCRIPTS ====== -->
-    <script>
-        // ... existing code ...
-    </script>
+    <script src="./scripts/cadastrarNoticia.js"></script>
 </body>
 </html>

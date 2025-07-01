@@ -1,0 +1,529 @@
+
+.portal-header {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    border-bottom: 3px solid #3498db;
+    position: relative;
+    overflow: hidden;
+}
+
+.portal-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Logo personalizado */
+.portal-logo-img {
+    width: 140px !important;
+    height: 120px !important;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.portal-logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Navegação personalizada */
+.portal-nav {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.portal-nav a {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.portal-nav a:hover {
+    background: white;
+    color: #3498db;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+}
+
+.portal-nav a i {
+    font-size: 1.1rem;
+}
+
+/* Container principal */
+.portal-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Card do formulário personalizado */
+.form-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #3498db, #3498db);
+    background-size: 200% 100%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Cabeçalho do formulário */
+.form-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #ecf0f1;
+    position: relative;
+}
+
+.form-header i {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 1rem;
+    display: block;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.form-header h2 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Grupos de formulário */
+.portal-form .form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.portal-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.portal-form label i {
+    color: #3498db;
+    margin-right: 0.5rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* Campos de entrada */
+.portal-form input[type="text"],
+.portal-form input[type="date"],
+.portal-form input[type="url"],
+.portal-form textarea,
+.portal-form select {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.portal-form textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.portal-form input[type="text"]:focus,
+.portal-form input[type="date"]:focus,
+.portal-form input[type="url"]:focus,
+.portal-form textarea:focus,
+.portal-form select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(142, 68, 173, 0.1);
+    background: white;
+    transform: translateY(-1px);
+}
+
+/* Estilos para campos válidos/inválidos */
+.portal-form input.valid,
+.portal-form textarea.valid,
+.portal-form select.valid {
+    border-color: #27ae60;
+    background: rgba(39, 174, 96, 0.05);
+}
+
+.portal-form input.invalid,
+.portal-form textarea.invalid,
+.portal-form select.invalid {
+    border-color: #e74c3c;
+    background: rgba(231, 76, 60, 0.05);
+}
+
+/* Linha de formulário (para campos lado a lado) */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Upload de arquivo personalizado */
+.file-upload {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.file-upload input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.file-upload-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #3498db, #3498db);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+}
+
+.file-upload-label:hover {
+    background: linear-gradient(135deg, #3498db, #3498db);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px #3498db;
+}
+
+.file-upload-label i {
+    font-size: 1.2rem;
+}
+
+/* Preview de imagem */
+.image-preview-container {
+    margin-top: 1rem;
+}
+
+.image-preview {
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.image-preview img:hover {
+    transform: scale(1.05);
+}
+
+.remove-image-btn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.remove-image-btn:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+/* Contadores de caracteres */
+.char-counter {
+    font-size: 0.8rem;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+    transition: color 0.3s ease;
+}
+
+.char-counter.warning {
+    color: #f39c12;
+}
+
+.char-counter.danger {
+    color: #e74c3c;
+}
+
+/* Botão de submit personalizado */
+.portal-form .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3498db, #3498db);
+    color: white;
+    padding: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.portal-form .submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.portal-form .submit-btn:hover::before {
+    left: 100%;
+}
+
+.portal-form .submit-btn:hover {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px #3498db;
+}
+
+.portal-form .submit-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px #3498db;
+}
+
+.portal-form .submit-btn i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Tooltips personalizados */
+.portal-form input[title]:hover::after,
+.portal-form textarea[title]:hover::after,
+.portal-form select[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2c3e50;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .portal-container {
+        margin: 1rem;
+        padding: 0;
+    }
+    
+    .form-card {
+        padding: 1.5rem;
+    }
+    
+    .form-header i {
+        font-size: 2.5rem;
+    }
+    
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .portal-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .portal-nav a {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .portal-logo-img {
+        width: 100px !important;
+        height: 80px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-card {
+        padding: 1rem;
+    }
+    
+    .portal-form input[type="text"],
+    .portal-form input[type="date"],
+    .portal-form input[type="url"],
+    .portal-form textarea,
+    .portal-form select {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .portal-form .submit-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .file-upload-label {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animações de entrada */
+.form-card {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Efeito de loading no botão */
+.portal-form .submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.portal-form .submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Hover effects para ícones */
+.portal-form label i:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease;
+}
+
+/* Efeito de destaque para campos obrigatórios */
+.portal-form .form-group:has(input[required]) label::after,
+.portal-form .form-group:has(textarea[required]) label::after,
+.portal-form .form-group:has(select[required]) label::after {
+    content: ' *';
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Estilos específicos para textarea */
+.portal-form textarea {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+}
+
+/* Estilos para select personalizado */
+.portal-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e44ad' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+/* Efeitos especiais para campos de data */
+.portal-form input[type="date"] {
+    font-family: inherit;
+}
+
+/* Estilos para placeholder */
+.portal-form input::placeholder,
+.portal-form textarea::placeholder {
+    color: #95a5a6;
+    opacity: 0.7;
+}
+
+.portal-form input:focus::placeholder,
+.portal-form textarea:focus::placeholder {
+    opacity: 0.3;
+}

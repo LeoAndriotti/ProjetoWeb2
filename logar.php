@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     <link rel="stylesheet" href="uploads/logar.css">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link rel="icon" href="./assets/img/logo.png" type="image/png">
+     <script src="./scripts/logar.js"></script>
 </head>
 <body>
     <!-- Modal de login centralizado -->
@@ -65,23 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
             <?php endif; ?>
         </div>
     </div>
-    <!-- Scripts para fechar o modal ao pressionar ESC ou clicar fora -->
-    <script>
-    // Fecha o modal ao pressionar ESC
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            window.location.href = 'index.php';
-        }
-    });
-    // Fecha o modal ao clicar fora
-    document.addEventListener('click', function(event) {
-        var modal = document.getElementById('loginModal');
-        if (event.target === modal) {
-            window.location.href = 'index.php';
-        }
-    });
-    </script>
-    <!-- Script de estilos e interações do login -->
-    <script src="uploads/logar.js"></script>
+ 
 </body>
 </html>

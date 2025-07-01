@@ -30,6 +30,8 @@ $todas_noticias = $noticias->ler();
     <link rel="stylesheet" href="./uploads/indexUsuario.css">
     <!-- Scripts da área do usuário -->
     <script src="./scripts/indexUsuario.js"></script>
+    <!-- Script de atualização de moedas -->
+    <script src="./scripts/moedas.js"></script>
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
@@ -76,6 +78,7 @@ $todas_noticias = $noticias->ler();
         <div class="modal-noticia-content">
             <span class="close-modal-noticia" onclick="fecharModalNoticia()">&times;</span>
             <div class="modal-noticia-header">
+                <button >Baixar PDF</button>
                 <h2 id="modal-noticia-titulo"></h2>
                 <div class="modal-noticia-meta">
                     <div class="modal-noticia-date">

@@ -80,6 +80,7 @@ function saudacao() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Notícia - CSL Times</title>
     <link rel="stylesheet" href="./uploads/style.css">
+    <link rel="stylesheet" href="./uploads/alterarNoticia.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
@@ -139,7 +140,7 @@ function saudacao() {
                             </div>
                         <?php endif; ?>
                         <div class="new-image">
-                            <input type="file" id="imagem" name="imagem" accept="image/*" onchange="visualizarImagem(this)">
+                            <input type="file" id="imagem" name="imagem" accept="image/*">
                             <div class="image-preview" id="image-preview">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 <p>Clique para selecionar uma nova imagem</p>
@@ -160,33 +161,6 @@ function saudacao() {
         </div>
     </div>
 
-    <!-- ====== SCRIPTS ====== -->
-    <script>
-    function visualizarImagem(input) {
-        const preview = document.getElementById('image-preview');
-        const currentImage = document.getElementById('current-image-preview');
-        
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
-                if (currentImage) {
-                    currentImage.style.display = 'none';
-                }
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-        } else {
-            preview.innerHTML = `
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Clique para selecionar uma nova imagem</p>
-            `;
-            if (currentImage) {
-                currentImage.style.display = 'block';
-            }
-        }
-    }
-    </script>
+    <script src="./scripts/alterarNoticia.js"></script>
 </body>
 </html>

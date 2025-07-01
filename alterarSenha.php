@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alterar_senha'])) {
     <title>Alterar Senha - CSL Times</title>
     <link rel="stylesheet" href="uploads/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+     <link rel="icon" href="./assets/img/logo.png" type="image/png">
+     <script src="./scripts/alterarSenha.js"></script>
 </head>
 <body class="portal-body">
     <div class="modal active" id="modalSenha">
@@ -79,20 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['alterar_senha'])) {
             <?php endif; ?>
         </div>
     </div>
-    <script>
-    // Fecha o modal ao pressionar ESC
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape') {
-            window.location.href = 'index.php';
-        }
-    });
-    // Fecha o modal ao clicar fora
-    document.addEventListener('click', function(event) {
-        var modal = document.getElementById('modalSenha');
-        if (event.target === modal) {
-            window.location.href = 'index.php';
-        }
-    });
-    </script>
+ 
 </body>
 </html>
