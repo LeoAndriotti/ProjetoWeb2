@@ -79,10 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
             isValid = false;
             errorMessage += 'Senha deve ter pelo menos 6 caracteres.\n';
             senhaInput.style.borderColor = '#ff4444';
-        } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(senha)) {
-            isValid = false;
-            errorMessage += 'Senha deve conter pelo menos uma letra maiúscula, uma minúscula e um número.\n';
-            senhaInput.style.borderColor = '#ff4444';
         } else {
             senhaInput.style.borderColor = '';
         }

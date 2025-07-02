@@ -1,0 +1,24 @@
+body.portal-body {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Botões principais */
+.submit-btn, .login-btn {
+    background: #3498db;
+    color: #fff;
+}
+.submit-btn:hover, .login-btn:hover {
+    background: #2980b9;
+}
+/* Botão sair/logout */
+.logout-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+.logout-btn:hover {
+    background: #c0392b;
+}

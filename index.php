@@ -25,6 +25,34 @@ if (!is_array($todas_noticias)) {
 // Busca as últimas 5 notícias para destaque
 $ultimas_noticias = $banco->query("SELECT * FROM noticias ORDER BY data DESC, id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 
+// Buscar autores e categorias para o filtro
+$autores = $usuario->ler();
+$categorias = $categoria->lerTodas();
+
+// Lógica de filtro
+$filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
+$filtro_autor = isset($_GET['autor']) ? $_GET['autor'] : '';
+$filtro_categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+
+$query = "SELECT * FROM noticias WHERE 1=1";
+$params = [];
+if ($filtro_titulo !== '') {
+    $query .= " AND titulo LIKE ?";
+    $params[] = "%$filtro_titulo%";
+}
+if ($filtro_autor !== '') {
+    $query .= " AND autor = ?";
+    $params[] = $filtro_autor;
+}
+if ($filtro_categoria !== '') {
+    $query .= " AND categoria = ?";
+    $params[] = $filtro_categoria;
+}
+$query .= " ORDER BY data DESC, id DESC";
+$stmt = $banco->prepare($query);
+$stmt->execute($params);
+$todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Lógica de login (caso o formulário seja enviado)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     $email = $_POST['email'];
@@ -63,6 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
 </head>
 
 <body class="portal-body">
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
     
     <!-- Container flexível para previsão do tempo e moedas -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
@@ -73,15 +104,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
 
     <!-- Botão de login fixo no topo direito -->
     <a href="logar.php" class="login-btn" style="position: absolute; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
-
+    
     <!-- Cabeçalho principal (pode ser expandido para navegação) -->
     <header class="main-header">
         <div class="header-content">
             <!-- Espaço reservado para conteúdo do cabeçalho -->
         </div>
     </header>
+    <!-- Filtro de busca -->
+        <form method="get" class="filtro-busca-form">
+            <div>
+                <label for="titulo"><i class="fa-solid fa-heading"></i> Título:</label>
+                <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Buscar por título...">
+            </div>
+            <div>
+                <label for="autor"><i class="fa-solid fa-user"></i> Autor:</label>
+                <select name="autor" id="autor">
+                    <option value="">Todos</option>
+                    <?php foreach ($autores as $a): ?>
+                        <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div>
+                <label for="categoria"><i class="fa-solid fa-list"></i> Categoria:</label>
+                <select name="categoria" id="categoria">
+                    <option value="">Todas</option>
+                    <?php foreach ($categorias as $cat): ?>
+                        <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
+        </form>
 
     <main class="news-container">
+        
         <!-- Seção de destaque com logo e slogan -->
         <section class="featured-news" style="text-align:center;">
             <img src="./assets/img/logo2.png" alt="Logo CSL Times" class="logo-img" style="display:block;margin:0 auto 10px auto;max-width:250px;">
@@ -125,3 +183,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
 </body>
 
 </html>
+<script>
+const btn = document.getElementById('toggle-theme');
+function updateThemeBtn() {
+  if (document.body.classList.contains('dark-mode')) {
+    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+}
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+  document.body.classList.toggle('light-mode', savedTheme === 'light');
+} else if (prefersDark) {
+  document.body.classList.add('dark-mode');
+} else {
+  document.body.classList.add('light-mode');
+}
+updateThemeBtn();
+btn.onclick = function() {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+  const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  localStorage.setItem('theme', theme);
+  updateThemeBtn();
+};
+</script>

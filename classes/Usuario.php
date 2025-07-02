@@ -6,11 +6,11 @@ class Usuario{
     public function __construct($banco){
         $this -> conexao = $banco;
     }   
-        public function registrar($nome, $sexo, $fone, $email, $senha){
-            $consulta = "INSERT INTO " . $this->nome_tabela . " (nome, sexo, fone, email, senha) VALUES (?, ?, ?, ?, ?)";
+        public function registrar($nome, $sexo, $fone, $email, $senha, $profissao){
+            $consulta = "INSERT INTO " . $this->nome_tabela . " (nome, sexo, fone, email, senha, profissao) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->conexao->prepare($consulta);
             $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
-            $stmt->execute([$nome, $sexo, $fone, $email, $senha_hash]);
+            $stmt->execute([$nome, $sexo, $fone, $email, $senha_hash, $profissao]);
             return $stmt;
         }
 
@@ -25,8 +25,8 @@ class Usuario{
             return false;
         }
 
-        public function criar($nome, $sexo, $fone, $email, $senha){
-            return $this->registrar($nome, $sexo, $fone, $email, $senha);
+        public function criar($nome, $sexo, $fone, $email, $senha, $profissao){
+            return $this->registrar($nome, $sexo, $fone, $email, $senha, $profissao);
         }
         
         public function ler(){

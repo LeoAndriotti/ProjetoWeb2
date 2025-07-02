@@ -52,6 +52,9 @@ function saudacao() {
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 <body class="portal-body">
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
     <!-- ====== CABEÇALHO DO PORTAL ====== -->
     <div class="portal-header portal-header-portal">
         <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 150px; height: 130px;">
@@ -67,6 +70,7 @@ function saudacao() {
     <!-- ====== CONTEÚDO PRINCIPAL ====== -->
     <div class="portal-container">
         <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
+        <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
         <h2 class="portal-section-title">Suas Notícias</h2>
         <?php if (empty($noticias_usuario)): ?>
             <div class="empty-state">
@@ -132,5 +136,6 @@ function saudacao() {
     </div>
 
     <script src="./scripts/portal.js"></script>
+
 </body>
 </html>

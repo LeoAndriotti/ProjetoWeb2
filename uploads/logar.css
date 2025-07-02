@@ -1,7 +1,10 @@
 /* ====== ESTILOS PARA O MODAL DE LOGIN (Logar.php) ====== */
 
-.portal-body {
-    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+body.portal-body {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -86,10 +89,10 @@
     border-color: #3498db;
 }
 
-.submit-btn {
+.submit-btn, .login-btn {
     width: 100%;
     background: #3498db;
-    color: white;
+    color: #fff;
     padding: 1rem;
     border: none;
     border-radius: 5px;
@@ -99,8 +102,24 @@
     transition: background 0.3s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover, .login-btn:hover {
     background: #2980b9;
+}
+
+.logout-btn {
+    background: #e74c3c;
+    color: #fff;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
 }
 
 .register-link {
