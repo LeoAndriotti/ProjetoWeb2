@@ -105,8 +105,8 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+    background: #3498db;
+    color: #fff;
     padding: 1rem 2rem;
     border-radius: 50px;
     text-decoration: none;
@@ -135,7 +135,7 @@
 }
 
 .portal-add-btn:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
+    background: #2980b9;
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
@@ -302,20 +302,20 @@
 }
 
 .news-edit-btn {
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: #3498db;
 }
 
 .news-edit-btn:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
+    background: #2980b9;
     transform: scale(1.1);
 }
 
 .news-delete-btn {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    background: #e74c3c;
 }
 
 .news-delete-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    background: #c0392b;
     transform: scale(1.1);
 }
 
@@ -483,22 +483,22 @@
 }
 
 .modal-edit-btn {
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+    background: #3498db;
+    color: #fff;
 }
 
 .modal-edit-btn:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
+    background: #2980b9;
     transform: translateY(-2px);
 }
 
 .modal-delete-btn {
-    background: linear-gradient(135deg, #e74c3c, #c0392b);
-    color: white;
+    background: #e74c3c;
+    color: #fff;
 }
 
 .modal-delete-btn:hover {
-    background: linear-gradient(135deg, #c0392b, #e74c3c);
+    background: #c0392b;
     transform: translateY(-2px);
 }
 
@@ -732,4 +732,21 @@
     left: 1rem;
     font-size: 1.5rem;
     z-index: 5;
+}
+
+/* Botões principais */
+.portal-add-btn, .news-edit-btn, .modal-edit-btn {
+    background: #3498db;
+    color: #fff;
+}
+.portal-add-btn:hover, .news-edit-btn:hover, .modal-edit-btn:hover {
+    background: #2980b9;
+}
+/* Botão sair/logout */
+.logout-btn, .news-delete-btn, .modal-delete-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+.logout-btn:hover, .news-delete-btn:hover, .modal-delete-btn:hover {
+    background: #c0392b;
 }

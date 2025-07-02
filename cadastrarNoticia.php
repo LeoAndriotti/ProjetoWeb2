@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once './config/config.php';  
 include_once './classes/Noticias.php';
 
@@ -7,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo = $_POST['titulo'];
     $noticia = $_POST['noticia'];
     $data = $_POST['data'];
-    $autor = $_POST['autor'];
+    $autor = $_SESSION['usuario_id'];
     $id_categoria = $_POST['categoria'];
     $imagem = '';
 
@@ -93,20 +94,6 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <i class="fas fa-calendar"></i> Data
                         </label>
                         <input type="date" name="data" id="data" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="autor">
-                            <i class="fas fa-user"></i> Autor
-                        </label>
-                        <select name="autor" id="autor" required>
-                            <option value="">Selecione um autor</option>
-                            <?php foreach ($usuarios as $usuario): ?>
-                                <option value="<?= htmlspecialchars($usuario['id']) ?>">
-                                    <?= htmlspecialchars($usuario['nome']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
                     </div>
                     <div class="form-group">
                         <label for="categoria">

@@ -1,4 +1,5 @@
 <?php
+include_once 'components/previsao_tempo.php';
 // Inicia a sessão para garantir que o usuário está logado
 session_start();
 // Inclui arquivos de configuração e classes principais
@@ -28,15 +29,20 @@ $todas_noticias = $noticias->ler();
     <link rel="stylesheet" href="./uploads/style.css">
     <link rel="stylesheet" href="./uploads/index.css">
     <link rel="stylesheet" href="./uploads/indexUsuario.css">
+       <link rel="stylesheet" href="./uploads/previsao_tempo.css">
     <!-- Scripts da área do usuário -->
     <script src="./scripts/indexUsuario.js"></script>
     <!-- Script de atualização de moedas -->
     <script src="./scripts/moedas.js"></script>
+    <script src="./scripts/previsao_tempo.js"></script>s
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 <body class="portal-body">
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
     <!-- Menu de moedas (reutilizável) -->
     <?php include './components/moedas.php'; ?>
     <!-- Botões de navegação do usuário -->
@@ -78,7 +84,6 @@ $todas_noticias = $noticias->ler();
         <div class="modal-noticia-content">
             <span class="close-modal-noticia" onclick="fecharModalNoticia()">&times;</span>
             <div class="modal-noticia-header">
-                <button >Baixar PDF</button>
                 <h2 id="modal-noticia-titulo"></h2>
                 <div class="modal-noticia-meta">
                     <div class="modal-noticia-date">
@@ -118,4 +123,32 @@ $todas_noticias = $noticias->ler();
         </div>
     </footer>
 </body>
+<script>
+const btn = document.getElementById('toggle-theme');
+function updateThemeBtn() {
+  if (document.body.classList.contains('dark-mode')) {
+    btn.innerHTML = '<i class=\"fa-solid fa-sun\"></i>';
+  } else {
+    btn.innerHTML = '<i class=\"fa-solid fa-moon\"></i>';
+  }
+}
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+  document.body.classList.toggle('light-mode', savedTheme === 'light');
+} else if (prefersDark) {
+  document.body.classList.add('dark-mode');
+} else {
+  document.body.classList.add('light-mode');
+}
+updateThemeBtn();
+btn.onclick = function() {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+  const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  localStorage.setItem('theme', theme);
+  updateThemeBtn();
+};
+</script>
 </html>

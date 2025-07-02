@@ -5,6 +5,10 @@ include_once './classes/Usuario.php';
 $erro = '';
 $sucesso = '';
 
+// Buscar profissões do banco
+$stmt = $banco->query('SELECT id, nome FROM profissao ORDER BY nome ASC');
+$profissoes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = new Usuario($banco);
     $nome = $_POST['nome'];
@@ -12,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fone = $_POST['fone'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
+    $profissao = $_POST['profissao'];
     
     // Verificar se o email já existe
     $usuario_existente = $usuario->buscarPorEmail($email);
@@ -19,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario_existente) {
         $erro = 'Este email já está cadastrado. Por favor, use outro email.';
     } else {
-        $usuario->criar($nome, $sexo, $fone, $email, $senha);
+        $usuario->criar($nome, $sexo, $fone, $email, $senha, $profissao);
         $sucesso = 'Usuário cadastrado com sucesso!';
         // Redirecionar após 2 segundos
         header('refresh:2;url=portal.php');
@@ -85,6 +90,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fa-solid fa-venus"></i> Feminino
                     </label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="profissao">
+                <i class="fas fa-user-tie"></i> Profissão
+                </label>
+                    <select name="profissao" id="profissao" required>
+                        <option value="">Selecione sua profissão</option>
+                        <?php foreach ($profissoes as $profissao): ?>
+                            <option value="<?= htmlspecialchars($profissao['id']) ?>">
+                                <?= htmlspecialchars($profissao['nome']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
             </div>
 
             <div class="form-group">

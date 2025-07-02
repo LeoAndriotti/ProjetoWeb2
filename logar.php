@@ -32,13 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - CSL Times</title>
     <!-- Estilos principais do site -->
+    <link rel="stylesheet" href="uploads/style.css">
     <link rel="stylesheet" href="uploads/logar.css">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
      <link rel="icon" href="./assets/img/logo.png" type="image/png">
      <script src="./scripts/logar.js"></script>
 </head>
-<body>
+<body class="portal-body">
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
     <!-- Modal de login centralizado -->
     <div class="modal active" id="loginModal">
         <div class="modal-content">
@@ -69,4 +73,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     </div>
  
 </body>
+<script>
+const btn = document.getElementById('toggle-theme');
+function updateThemeBtn() {
+  if (document.body.classList.contains('dark-mode')) {
+    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
+  } else {
+    btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
+  }
+}
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+  document.body.classList.toggle('light-mode', savedTheme === 'light');
+} else if (prefersDark) {
+  document.body.classList.add('dark-mode');
+} else {
+  document.body.classList.add('light-mode');
+}
+updateThemeBtn();
+btn.onclick = function() {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+  const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+  localStorage.setItem('theme', theme);
+  updateThemeBtn();
+};
+</script>
 </html>
