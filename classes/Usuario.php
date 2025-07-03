@@ -41,10 +41,10 @@ class Usuario{
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
-        public function atualizar($id, $nome, $sexo, $fone, $email){
-            $consulta = "UPDATE " . $this->nome_tabela . " SET nome = ?, sexo = ?, fone = ?, email = ? WHERE id = ?";
+        public function atualizar($id, $nome, $sexo, $fone, $email, $profissao){
+            $consulta = "UPDATE " . $this->nome_tabela . " SET nome = ?, sexo = ?, fone = ?, email = ?, profissao = ? WHERE id = ?";
             $stmt = $this->conexao->prepare($consulta);
-            $stmt->execute([$nome, $sexo, $fone, $email, $id]);
+            $stmt->execute([$nome, $sexo, $fone, $email, $profissao, $id]);
             return $stmt; 
         }
         public function deletar($id){

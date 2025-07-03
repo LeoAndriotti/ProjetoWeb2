@@ -1,33 +1,44 @@
 <?php
 session_start();
+
 include_once './config/config.php';
 include_once './classes/Usuario.php';
 include_once './classes/Noticias.php';
 include_once './classes/Categoria.php';
+include_once './classes/Profissao.php';
+
 // Verificar se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
     header('Location: index.php');
     exit();
 }
+
 $usuario = new Usuario($banco);
 $noticias = new Noticias($banco);
 $categoria = new Categoria($banco);
+$profissao = new Profissao($banco);
+
 if (isset($_GET['deletar'])) {
     $id = $_GET['deletar'];
     $usuario->deletar($id);
     header('Location: portal.php');
     exit();
 }
+
 $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
 if ($dados_usuario) {
     $nome_usuario = $dados_usuario['nome'];
     $id_usuario = $dados_usuario['id'];
+    $profissao_usuario = $profissao->lerPorId($dados_usuario['profissao']);
+    $tipo_usuario = $profissao_usuario['nome'] ?? '';
 } else {
     header('Location: logout.php');
     exit();
 }
+
 $dados = $usuario->ler();
 $noticias_usuario = $noticias->lerPorAutor($id_usuario);
+
 function saudacao() {
     $hora = date('H');
     if ($hora >= 6 && $hora < 12) {
@@ -69,12 +80,34 @@ function saudacao() {
 
     <!-- ====== CONTEÚDO PRINCIPAL ====== -->
     <div class="portal-container">
-        <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
-        <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
-        <h2 class="portal-section-title">Suas Notícias</h2>
+        <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+            <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
+        <?php elseif (strtolower($tipo_usuario) === 'anunciante'): ?>
+            <a href="cadastrarAnuncio.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
+        <?php else: ?>
+            <!-- Para outros tipos de usuário, mostra ambos os botões -->
+            <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
+            <a href="cadastrarAnuncio.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
+        <?php endif; ?>
+        
+        <h2 class="portal-section-title">
+            <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+                Suas Notícias
+            <?php elseif (strtolower($tipo_usuario) === 'anunciante'): ?>
+                Seus Anúncios
+            <?php else: ?>
+                Suas Publicações
+            <?php endif; ?>
+        </h2>
         <?php if (empty($noticias_usuario)): ?>
             <div class="empty-state">
-                <p>Você ainda não publicou nenhuma notícia.</p>
+                <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+                    <p>Você ainda não publicou nenhuma notícia.</p>
+                <?php elseif (strtolower($tipo_usuario) === 'anunciante'): ?>
+                    <p>Você ainda não publicou nenhum anúncio.</p>
+                <?php else: ?>
+                    <p>Você ainda não publicou nenhuma publicação.</p>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <div class="news-grid">

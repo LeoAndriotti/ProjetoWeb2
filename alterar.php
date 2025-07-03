@@ -10,9 +10,11 @@ if(!isset($_SESSION['usuario_id'])) {
 // Inclui arquivos de configuração e classes necessárias
 include_once './config/config.php';      // Configurações do banco de dados
 include_once './classes/Usuario.php';    // Classe para operações com usuários
+include_once './classes/Profissao.php';  // Classe para profissões
 
 // Instancia o objeto usuário para operações no banco
 $usuario = new Usuario($banco);
+$profissaoObj = new Profissao($banco);
 
 // Verifica se o ID foi fornecido e se corresponde ao usuário logado
 // Isso impede que um usuário edite dados de outro usuário
@@ -26,6 +28,9 @@ $id = $_GET['id'];
 
 // Busca os dados do usuário no banco de dados
 $linha = $usuario->lerPorId($id);
+
+// Busca todas as profissões
+$profissoes = $profissaoObj->lerTodas();
 
 // Se não encontrar o usuário, redireciona para o portal
 if (!$linha) {
@@ -41,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sexo = $_POST['sexo'];
     $fone = $_POST['fone'];
     $email = $_POST['email'];
+    $profissao = $_POST['profissao'];
     
     // Atualiza os dados do usuário no banco
-    $usuario->atualizar($id, $nome, $sexo, $fone, $email);
+    $usuario->atualizar($id, $nome, $sexo, $fone, $email, $profissao);
     
     // Redireciona para o portal após salvar
     header('Location: portal.php');
@@ -127,6 +133,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fa-solid fa-venus"></i> Feminino
                     </label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="profissao">
+                <i class="fas fa-user-tie"></i> Profissão
+                </label>
+                    <select name="profissao" id="profissao" required>
+                        <option value="">Selecione sua profissão</option>
+                        <?php foreach ($profissoes as $profissao): ?>
+                            <option value="<?= htmlspecialchars($profissao['id']) ?>" <?= ($linha['profissao'] == $profissao['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($profissao['nome']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
             </div>
 
             <div class="form-group">

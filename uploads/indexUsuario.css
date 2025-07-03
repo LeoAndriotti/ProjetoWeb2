@@ -181,3 +181,48 @@
         padding: 4px 0;
     }
 }
+
+/* Dark mode overrides para garantir compatibilidade */
+body.dark-mode .logout-btn {
+    background: var(--btn-danger);
+    color: #fff;
+}
+
+body.dark-mode .logout-btn:hover {
+    background: var(--btn-danger-hover);
+}
+
+body.dark-mode .login-btn {
+    background: var(--btn-main);
+    color: #fff;
+}
+
+body.dark-mode .login-btn:hover {
+    background: var(--btn-main-hover);
+}
+
+body.dark-mode .featured-news h2 {
+    color: var(--text-main);
+}
+
+body.dark-mode .empty-state p {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-card {
+    background: var(--bg-card);
+    color: var(--text-main);
+}
+
+body.dark-mode .news-title {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-excerpt {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-author,
+body.dark-mode .news-date {
+    color: var(--text-secondary);
+}

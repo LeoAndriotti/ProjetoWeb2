@@ -1,3 +1,8 @@
+/* ====== ESTILOS ESPECÍFICOS PARA CADASTRAR ANÚNCIO ====== */
+
+/* Importar estilos base */
+@import url('./style.css');
+
 /* ====== CABEÇALHO ====== */
 .portal-header {
     background: linear-gradient(135deg, #2c3e50, #34495e);
