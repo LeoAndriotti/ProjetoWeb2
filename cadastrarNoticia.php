@@ -55,6 +55,11 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 <body class="portal-body">
+    <!-- Botão de dark mode -->
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+
     <!-- ====== CABEÇALHO ====== -->
     <div class="portal-header">
     <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img">
@@ -133,6 +138,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 
+    <!-- Scripts movidos para o final do body -->
     <script src="./scripts/cadastrarNoticia.js"></script>
 </body>
 </html>

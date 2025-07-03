@@ -1356,8 +1356,8 @@ button.Pdf-btn:hover {
 
 .theme-toggle-btn {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  left: 20px;
   z-index: 2000;
   background: var(--bg-card);
   color: var(--btn-main);
@@ -1404,7 +1404,7 @@ button.Pdf-btn:hover {
   margin-bottom: 0;
 }
 .filtro-busca-form label {
-  color: var(--text-main);
+  color: #ffffff;
   font-weight: 600;
   margin-bottom: 0.3rem;
   font-size: 1.08rem;
@@ -1454,4 +1454,100 @@ button.Pdf-btn:hover {
     min-width: 100px;
     width: 100%;
   }
+}
+
+/* Dark mode overrides para garantir compatibilidade */
+body.dark-mode {
+  --bg-main: #181c24;
+  --bg-card: #23272f;
+  --text-main: #f4f6fa;
+  --text-secondary: #6cb6ff;
+  --btn-main: #2980b9;
+  --btn-main-hover: #3498db;
+  --btn-danger: #e74c3c;
+  --btn-danger-hover: #c0392b;
+}
+
+body.dark-mode .news-card {
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+body.dark-mode .news-title {
+  color: var(--text-main);
+}
+
+body.dark-mode .news-excerpt {
+  color: var(--text-main);
+}
+
+body.dark-mode .news-author,
+body.dark-mode .news-date {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .featured-news h2 {
+  color: var(--text-main);
+}
+
+body.dark-mode .empty-state p {
+  color: var(--text-main);
+}
+
+body.dark-mode .filtro-busca-form {
+  background: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .filtro-busca-form input[type="text"],
+body.dark-mode .filtro-busca-form select {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: #4a5568;
+}
+
+body.dark-mode .filtro-busca-form input[type="text"]:focus,
+body.dark-mode .filtro-busca-form select:focus {
+  border-color: var(--btn-main);
+}
+
+body.dark-mode .login-btn {
+  background: var(--btn-main);
+  color: #fff;
+}
+
+body.dark-mode .login-btn:hover {
+  background: var(--btn-main-hover);
+}
+
+body.dark-mode .theme-toggle-btn {
+  background: var(--bg-card);
+  color: var(--btn-main);
+}
+
+body.dark-mode .theme-toggle-btn:hover {
+  background: var(--btn-main);
+  color: #fff;
+}
+
+/* Labels dos filtros e títulos em branco no modo normal */
+.filtro-busca-form label {
+  color: #ffffff;
+}
+
+.ultimas-noticias h2 {
+  color: #ffffff;
+}
+
+body.dark-mode .filtro-busca-form input[type="text"]:focus,
+body.dark-mode .filtro-busca-form select:focus {
+  border-color: var(--btn-main);
+}
+
+body.dark-mode .filtro-busca-form label {
+  color: var(--text-main);
+}
+
+body.dark-mode .login-btn {
+  background: var(--btn-main);
+  color: #fff;
 } 

@@ -80,11 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     <link rel="stylesheet" href="./uploads/style.css">
     <link rel="stylesheet" href="./uploads/Index.css">
     <link rel="stylesheet" href="./uploads/previsao_tempo.css">
-    <!-- Scripts da página inicial -->
-    <script src="./scripts/Index.js"></script>
-    <!-- Script de atualização de moedas -->
-    <script src="./scripts/moedas.js"></script>
-    <script src="./scripts/previsao_tempo.js"></script>
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
@@ -180,34 +175,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
         </div>
     </footer>
 
+    <!-- Scripts da página inicial - movidos para o final do body -->
+    <script src="./scripts/index.js"></script>
+    <!-- Script de atualização de moedas -->
+    <script src="./scripts/moedas.js"></script>
+    <script src="./scripts/previsao_tempo.js"></script>
+
 </body>
 
 </html>
-<script>
-const btn = document.getElementById('toggle-theme');
-function updateThemeBtn() {
-  if (document.body.classList.contains('dark-mode')) {
-    btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-  } else {
-    btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-  }
-}
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-  document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-  document.body.classList.toggle('light-mode', savedTheme === 'light');
-} else if (prefersDark) {
-  document.body.classList.add('dark-mode');
-} else {
-  document.body.classList.add('light-mode');
-}
-updateThemeBtn();
-btn.onclick = function() {
-  document.body.classList.toggle('dark-mode');
-  document.body.classList.toggle('light-mode');
-  const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-  localStorage.setItem('theme', theme);
-  updateThemeBtn();
-};
-</script>

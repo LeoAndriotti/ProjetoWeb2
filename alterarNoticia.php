@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $noticia->conteudo = $_POST['conteudo'];
     $noticia->id_categoria = $_POST['categoria_id'];
     
+    // Prioriza upload
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
         $imagem = $_FILES['imagem'];
         $extensao = strtolower(pathinfo($imagem['name'], PATHINFO_EXTENSION));
@@ -48,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $noticia->imagem = $destino;
         }
+    } elseif (!empty($_POST['imagem_url'])) {
+        // Se não houver upload, usa a URL
+        $noticia->imagem = trim($_POST['imagem_url']);
     }
     
     if ($noticia->atualizar($noticia->id, $noticia->titulo, $noticia->conteudo, $noticia->id_categoria, $noticia->imagem)) {
@@ -85,6 +89,11 @@ function saudacao() {
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 <body class="portal-body">
+    <!-- Botão de dark mode -->
+    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+
     <!-- ====== CABEÇALHO ====== -->
     <div class="portal-header portal-header-portal">
         <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 150px; height: 130px;">
@@ -146,6 +155,9 @@ function saudacao() {
                                 <p>Clique para selecionar uma nova imagem</p>
                             </div>
                         </div>
+                        <div style="margin-top: 1rem;">
+                            <input type="url" name="imagem_url" id="imagem_url" placeholder="Ou cole a URL da imagem aqui">
+                        </div>
                     </div>
                 </div>
 
@@ -161,6 +173,7 @@ function saudacao() {
         </div>
     </div>
 
+    <!-- Scripts movidos para o final do body -->
     <script src="./scripts/alterarNoticia.js"></script>
 </body>
 </html>

@@ -171,6 +171,7 @@
 
 /* Campos de entrada */
 .news-form input[type="text"],
+.news-form input[type="url"],
 .news-form textarea,
 .news-form select {
     width: 100%;
@@ -191,11 +192,12 @@
 }
 
 .news-form input[type="text"]:focus,
+.news-form input[type="url"]:focus,
 .news-form textarea:focus,
 .news-form select:focus {
     outline: none;
     border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     background: white;
     transform: translateY(-1px);
 }
@@ -335,10 +337,20 @@
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #e67e22, #f39c12);
+    background: #3498db;
     color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .btn-primary::before {
@@ -357,9 +369,9 @@
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #f39c12, #e67e22);
+    background: #2980b9;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(230, 126, 34, 0.4);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
 
 .btn-secondary {
@@ -597,4 +609,58 @@
 .remove-new-image:hover {
     background: #3498db;
     transform: translateY(-1px);
+}
+
+/* Dark mode overrides para garantir compatibilidade */
+body.dark-mode .portal-header-portal {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+body.dark-mode .form-card {
+    background: rgba(44, 62, 80, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-card h2 {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-form label {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-form input[type="text"],
+body.dark-mode .news-form input[type="url"],
+body.dark-mode .news-form textarea,
+body.dark-mode .news-form select {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .news-form input[type="text"]:focus,
+body.dark-mode .news-form input[type="url"]:focus,
+body.dark-mode .news-form textarea:focus,
+body.dark-mode .news-form select:focus {
+    border-color: #3498db;
+    background: var(--bg-card);
+}
+
+body.dark-mode .btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover {
+    background: #2980b9;
+}
+
+body.dark-mode .theme-toggle-btn {
+    background: var(--bg-card);
+    color: var(--btn-main);
+}
+
+body.dark-mode .theme-toggle-btn:hover {
+    background: var(--btn-main);
+    color: #fff;
 }

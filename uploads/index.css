@@ -4,7 +4,7 @@
     padding: 1rem 2rem;
     border: none;
     border-radius: 5px;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -12,6 +12,7 @@
     display: inline-block;
     margin-left: auto;
 }
+
 
 .login-btn:hover {
     background: #2980b9;
@@ -137,6 +138,14 @@
 }
 
 .ultimas-noticias {}
+
+.ultimas-noticias h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
 .news-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -323,3 +332,59 @@
             padding: 4px 0;
         }
     }
+
+/* Dark mode overrides para garantir compatibilidade */
+body.dark-mode .news-card {
+    background: var(--bg-card);
+    color: var(--text-main);
+}
+
+body.dark-mode .news-title {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-excerpt {
+    color: var(--text-main);
+}
+
+body.dark-mode .news-author,
+body.dark-mode .news-date {
+    color: var(--text-secondary);
+}
+
+body.dark-mode .featured-news h2 {
+    color: var(--text-main);
+}
+
+body.dark-mode .empty-state p {
+    color: var(--text-main);
+}
+
+body.dark-mode .filtro-busca-form {
+    background: rgba(255,255,255,0.05);
+}
+
+body.dark-mode .filtro-busca-form input[type="text"],
+body.dark-mode .filtro-busca-form select {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border-color: #4a5568;
+}
+
+body.dark-mode .filtro-busca-form input[type="text"]:focus,
+body.dark-mode .filtro-busca-form select:focus {
+    border-color: var(--btn-main);
+}
+
+body.dark-mode .login-btn {
+    background: var(--btn-main);
+    color: #fff;
+}
+
+body.dark-mode .login-btn:hover {
+    background: var(--btn-main-hover);
+}
+
+body.dark-mode .ultimas-noticias h2 {
+    color: var(--text-main);
+}
