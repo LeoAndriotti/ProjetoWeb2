@@ -7,6 +7,7 @@ include_once 'config/config.php'; // Configurações do banco de dados
 include_once 'classes/Usuario.php'; // Classe de usuário
 include_once 'classes/Noticias.php'; // Classe de notícias
 include_once 'classes/Categoria.php'; // Classe de categorias
+include_once 'classes/Anuncio.php'; // Classe de anúncios
 // Inclui o componente de card de notícia reutilizável
 include_once 'components/noticiaCard.php';
 
@@ -14,9 +15,24 @@ include_once 'components/noticiaCard.php';
 $usuario = new Usuario($banco);
 $noticias = new Noticias($banco);
 $categoria = new Categoria($banco);
+$anuncio = new Anuncio($banco);
+
+// Recupera o usuário logado
+$tipo_usuario = 'usuario'; // valor padrão
+if (isset($_SESSION['usuario_id'])) {
+    $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
+    if ($dados_usuario && isset($dados_usuario['profissao'])) {
+        // Se tiver profissão, busque o nome da profissão
+        include_once 'classes/Profissao.php';
+        $profissao = new Profissao($banco);
+        $profissao_usuario = $profissao->lerPorId($dados_usuario['profissao']);
+        $tipo_usuario = strtolower($profissao_usuario['nome'] ?? 'usuario');
+    }
+}
 
 // Busca todas as notícias do banco
 $todas_noticias = $noticias->ler();
+$anuncios_ativos = $anuncio->lerAtivos();
 
 ?>
 <!DOCTYPE html>
@@ -38,11 +54,37 @@ $todas_noticias = $noticias->ler();
     <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
       <i class="fa-solid fa-moon"></i>
     </button>
+    <?php if (!empty($anuncios_ativos)): ?>
+    <div class="anuncios-ticker" style="width:100vw;overflow:hidden;background:rgba(0,0,0,0.7);margin-bottom:10px;">
+      <div class="anuncios-ticker-inner" style="display:flex;align-items:center;animation:anuncios-scroll 40s linear infinite;gap:40px;">
+        <?php foreach ($anuncios_ativos as $an): ?>
+          <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" style="display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;min-width:320px;">
+            <?php if (!empty($an['imagem'])): ?>
+              <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" style="height:48px;max-width:120px;border-radius:8px;object-fit:cover;">
+            <?php endif; ?>
+            <span style="font-size:1.1rem;font-weight:600;white-space:nowrap;"><?php echo htmlspecialchars($an['texto']); ?></span>
+          </a>
+        <?php endforeach; ?>
+      </div>
+      <style>
+        @keyframes anuncios-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .anuncios-ticker-inner:hover { animation-play-state: paused; }
+      </style>
+    </div>
+    <?php endif; ?>
     <!-- Menu de moedas (reutilizável) -->
     <?php include './components/moedas.php'; ?>
     <!-- Botões de navegação do usuário -->
     <div class="index-nav" style="position: absolute; right: 30px; top: 20px; z-index: 1100;">
-        <a href="portal.php" class="login-btn">Meu Portal</a>
+        <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+            <a href="portal.php" class="login-btn">Meu Portal</a>
+        <?php else: ?>
+            <!-- Para outros tipos de usuário, mostra ambos os botões -->
+            <a href="portalAnunciante.php" class="login-btn">Meu Portal</a>
+        <?php endif; ?>
         <a href="logout.php" class="logout-btn">Sair</a>
     </div>
 

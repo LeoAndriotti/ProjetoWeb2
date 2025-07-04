@@ -2,6 +2,7 @@
 session_start();
 include_once './config/config.php';  
 include_once './classes/Anuncio.php';
+include_once './classes/Usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $anuncio = new Anuncio($banco);
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $anuncio->criar($nome, $imagem, $link, $ativo, $destaque, $data_cadastro, $valorAnuncio, $texto);
-    header('Location: portal.php');
+    header('Location: portalAnunciante.php');
     exit();
 }
 
@@ -35,6 +36,15 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $sqlCat = "SELECT id,nome FROM categorias ORDER BY nome ASC";
 $stmt = $banco->query($sqlCat);
 $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$usuario = new Usuario($banco);
+$nome_usuario = '';
+if (isset($_SESSION['usuario_id'])) {
+    $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
+    if ($dados_usuario) {
+        $nome_usuario = $dados_usuario['nome'];
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -61,7 +71,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img">
 
         <div class="portal-nav">
-            <a href="portal.php"><i class="fas fa-arrow-left"></i> Voltar ao Portal</a>
+            <a href="portalAnunciante.php"><i class="fas fa-arrow-left"></i> Voltar ao Portal</a>
             <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
         </div>
     </div>
@@ -76,7 +86,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="form-group">
                     <label for="nome"><i class="fas fa-user-tag"></i> Nome do Anunciante</label>
-                    <input type="text" name="nome" id="nome" placeholder="Nome da empresa ou anunciante" required>
+                    <input type="text" name="nome" id="nome" placeholder="Nome da empresa ou anunciante" required value="<?php echo htmlspecialchars($nome_usuario); ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="imagem"><i class="fas fa-image"></i> Imagem/Banner (URL)</label>

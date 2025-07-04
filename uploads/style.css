@@ -1552,9 +1552,10 @@ body.dark-mode .login-btn {
   color: #fff;
 }
 
-/* Remover sublinhado dos links das moedas */
+/* Garantir que os links das moedas não tenham sublinhado */
 .ticker-item {
     text-decoration: none !important;
+    color: inherit;
 }
 
 .ticker-item:visited,
@@ -1562,4 +1563,5 @@ body.dark-mode .login-btn {
 .ticker-item:focus,
 .ticker-item:hover {
     text-decoration: none !important;
+    color: inherit;
 } 

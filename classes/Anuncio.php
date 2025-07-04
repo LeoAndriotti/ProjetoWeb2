@@ -1,7 +1,7 @@
 <?php
 class Anuncio {
     private $conexao;
-    private $nome_tabela = "anuncio";
+    private $nome_tabela = "anuncios";
     public $id;
     public $nome;
     public $imagem;
@@ -66,6 +66,13 @@ class Anuncio {
         $consulta = "SELECT * FROM " . $this->nome_tabela . " WHERE destaque = 1 ORDER BY dataCadastro DESC, id DESC";
         $stmt = $this->conexao->prepare($consulta);
         $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function lerPorNomeAnunciante($nome) {
+        $consulta = "SELECT * FROM " . $this->nome_tabela . " WHERE nome = ? ORDER BY dataCadastro DESC, id DESC";
+        $stmt = $this->conexao->prepare($consulta);
+        $stmt->execute([$nome]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
