@@ -153,6 +153,66 @@ document.addEventListener('DOMContentLoaded', function() {
         formCard.style.transform = 'translateY(0)';
     }, 100);
     
+    // ====== MÁSCARA PARA CAMPO DE VALOR ======
+    const valorInput = document.getElementById('valorAnuncio');
+    
+    if (valorInput) {
+        function formatarMoeda(valor) {
+            valor = valor.replace(/\D/g, '');
+            if (valor === '') return '';
+            while (valor.length < 3) valor = '0' + valor; // Garante pelo menos 3 dígitos
+            let reais = valor.slice(0, -2);
+            let centavos = valor.slice(-2);
+            reais = reais.replace(/^0+/, '') || '0';
+            const reaisFormatados = reais.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return `R$ ${reaisFormatados},${centavos}`;
+        }
+
+        valorInput.addEventListener('input', function(e) {
+            const cursor = valorInput.selectionStart;
+            const valorFormatado = formatarMoeda(e.target.value);
+            e.target.value = valorFormatado;
+        });
+
+        valorInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.value = 'R$ 0,00';
+            } else {
+                this.value = formatarMoeda(this.value);
+            }
+        });
+
+        valorInput.addEventListener('blur', function() {
+            if (this.value === 'R$ 0,00' || this.value === 'R$ ') {
+                this.value = '';
+            } else {
+                this.value = formatarMoeda(this.value);
+            }
+        });
+
+        valorInput.addEventListener('paste', function(e) {
+            e.preventDefault();
+            let texto = (e.clipboardData || window.clipboardData).getData('text');
+            this.value = formatarMoeda(texto);
+        });
+
+        valorInput.addEventListener('keydown', function(e) {
+            // Permitir: backspace, delete, tab, escape, enter, setas
+            const allowedKeys = [8, 9, 27, 13, 37, 38, 39, 40, 46];
+            // Permitir números (0-9)
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || 
+                (e.keyCode >= 96 && e.keyCode <= 105) || 
+                allowedKeys.includes(e.keyCode)) {
+                return;
+            }
+            // Permitir Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+            if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 88)) {
+                return;
+            }
+            e.preventDefault();
+        });
+    }
+    
     // ====== MELHORAR UX DOS CAMPOS ======
     const inputs = document.querySelectorAll('input, textarea, select');
     

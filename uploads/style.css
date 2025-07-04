@@ -1550,4 +1550,16 @@ body.dark-mode .filtro-busca-form label {
 body.dark-mode .login-btn {
   background: var(--btn-main);
   color: #fff;
+}
+
+/* Remover sublinhado dos links das moedas */
+.ticker-item {
+    text-decoration: none !important;
+}
+
+.ticker-item:visited,
+.ticker-item:active,
+.ticker-item:focus,
+.ticker-item:hover {
+    text-decoration: none !important;
 } 

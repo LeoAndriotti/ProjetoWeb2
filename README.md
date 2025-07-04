@@ -128,6 +128,12 @@ ProjetoFinalWEB/
        nome VARCHAR(50) NOT NULL
    );
 
+   -- Tabela de profissões
+   CREATE TABLE profissao (
+       id INT AUTO_INCREMENT PRIMARY KEY,
+       nome VARCHAR(100) NOT NULL
+   );
+
    -- Tabela de notícias
    CREATE TABLE noticias (
        id INT AUTO_INCREMENT PRIMARY KEY,
@@ -140,6 +146,21 @@ ProjetoFinalWEB/
        FOREIGN KEY (autor) REFERENCES usuarios(id),
        FOREIGN KEY (categoria) REFERENCES categorias(id)
    );
+
+   -- Adicionar coluna profissao na tabela usuarios
+   ALTER TABLE usuarios ADD COLUMN profissao INT;
+   ALTER TABLE usuarios ADD CONSTRAINT fk_usuario_profissao 
+   FOREIGN KEY (profissao) REFERENCES profissao(id);
+
+   -- Inserir profissões padrão
+   INSERT INTO profissao (nome) VALUES 
+   ('Jornalista'),
+   ('Anunciante'),
+   ('Editor'),
+   ('Repórter'),
+   ('Fotógrafo'),
+   ('Designer'),
+   ('Administrador');
 
    -- Inserir categorias padrão
    INSERT INTO categorias (nome) VALUES 
@@ -245,6 +266,12 @@ ProjetoFinalWEB/
 - Verifique se o MySQL está rodando
 - Confirme as credenciais em `config/config.php`
 - Certifique-se de que o banco `bdcrud` existe
+
+### Erro de Tabela Profissão
+Se você encontrar erro sobre a tabela `profissao` não existir:
+1. Execute o arquivo `setup_profissao.php` no navegador
+2. Ou execute manualmente os comandos SQL do arquivo `criar_tabela_profissao.sql`
+3. Isso criará a tabela e adicionará a coluna necessária na tabela `usuarios`
 
 ### Erro de Upload de Imagem
 - Verifique permissões da pasta `uploads/`
