@@ -7,6 +7,7 @@ include_once 'config/config.php'; // Configurações do banco de dados
 include_once 'classes/Usuario.php'; // Classe de usuário
 include_once 'classes/Noticias.php'; // Classe de notícias
 include_once 'classes/Categoria.php'; // Classe de categorias
+include_once 'classes/Anuncio.php'; // Classe de anúncios
 // Define constante para identificar que estamos na página inicial (index)
 define('INDEX_MODE', true);
 // Inclui o componente de card de notícia reutilizável
@@ -16,6 +17,7 @@ include_once 'components/noticiaCard.php';
 $usuario = new Usuario($banco);
 $noticias = new Noticias($banco);
 $categoria = new Categoria($banco);
+$anuncio = new Anuncio($banco);
 
 // Busca todas as notícias do banco
 $todas_noticias = $noticias->ler();
@@ -68,6 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
         $erro_login = 'Email ou senha inválidos';
     }
 }
+
+$anuncios_ativos = $anuncio->lerAtivos();
+$anuncios_destaque = $anuncio->lerDestaques();
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -89,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
     <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
       <i class="fa-solid fa-moon"></i>
     </button>
-    
+        
     <!-- Container flexível para previsão do tempo e moedas -->
     <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
         
@@ -174,6 +179,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
             &copy; <?php echo date('Y'); ?> CSL Times. Todos os direitos reservados.
         </div>
     </footer>
+
+    <!-- Pop-up de anúncios em destaque -->
+    <div id="popup-anuncio-destaque" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.75);z-index:9999;justify-content:center;align-items:center;">
+      <div style="background:#fff;padding:48px 36px 36px 36px;border-radius:24px;box-shadow:0 12px 48px rgba(0,0,0,0.35);max-width:1200px;max-height:90vh;display:flex;flex-direction:column;align-items:center;position:relative;overflow-y:auto;">
+        <button id="fechar-popup-anuncio" style="position:absolute;top:18px;right:28px;background:none;border:none;font-size:3rem;cursor:pointer;color:#888;z-index:2;">&times;</button>
+        <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:center;width:100%;">
+          <?php foreach ($anuncios_destaque as $an): ?>
+            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" style="background:#f8f8f8;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:32px 24px;display:flex;flex-direction:column;align-items:center;max-width:340px;min-width:260px;text-decoration:none;color:#222;transition:box-shadow 0.2s;">
+              <?php if (!empty($an['imagem'])): ?>
+                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" style="max-width:280px;max-height:120px;border-radius:12px;object-fit:cover;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.10);">
+              <?php endif; ?>
+              <span style="font-size:1.3rem;font-weight:700;text-align:center;line-height:1.3;margin-bottom:8px;display:block;overflow-wrap:break-word;">
+                <?php echo htmlspecialchars($an['texto']); ?>
+              </span>
+            </a>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+    <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      <?php if (!empty($anuncios_destaque)): ?>
+        setTimeout(function() {
+          document.getElementById('popup-anuncio-destaque').style.display = 'flex';
+        }, 2000);
+        document.getElementById('fechar-popup-anuncio').onclick = function() {
+          document.getElementById('popup-anuncio-destaque').style.display = 'none';
+        };
+      <?php endif; ?>
+    });
+    </script>
 
     <!-- Scripts da página inicial - movidos para o final do body -->
     <script src="./scripts/index.js"></script>

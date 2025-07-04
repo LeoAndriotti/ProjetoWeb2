@@ -89,8 +89,6 @@ function saudacao() {
         <div class="portal-add-btn-container">
         <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
             <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
-        <?php elseif (strtolower($tipo_usuario) === 'anunciante'): ?>
-            <a href="cadastrarAnuncio.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
         <?php else: ?>
             <!-- Para outros tipos de usuário, mostra ambos os botões -->
             <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
