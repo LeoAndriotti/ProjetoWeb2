@@ -199,14 +199,19 @@ $anuncios_destaque = $anuncio->lerDestaques();
       </div>
     </div>
     <script>
+    let popupDestaqueTimer = null;
+    function mostrarPopupDestaque() {
+      document.getElementById('popup-anuncio-destaque').style.display = 'flex';
+    }
+    function esconderPopupDestaque() {
+      document.getElementById('popup-anuncio-destaque').style.display = 'none';
+      clearTimeout(popupDestaqueTimer);
+      popupDestaqueTimer = setTimeout(mostrarPopupDestaque, 30000); // 30 segundos
+    }
     window.addEventListener('DOMContentLoaded', function() {
       <?php if (!empty($anuncios_destaque)): ?>
-        setTimeout(function() {
-          document.getElementById('popup-anuncio-destaque').style.display = 'flex';
-        }, 2000);
-        document.getElementById('fechar-popup-anuncio').onclick = function() {
-          document.getElementById('popup-anuncio-destaque').style.display = 'none';
-        };
+        setTimeout(mostrarPopupDestaque, 2000);
+        document.getElementById('fechar-popup-anuncio').onclick = esconderPopupDestaque;
       <?php endif; ?>
     });
     </script>
