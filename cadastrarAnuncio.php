@@ -12,7 +12,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ativo = isset($_POST['ativo']) ? 1 : 0;
     $destaque = isset($_POST['destaque']) ? 1 : 0;
     $data_cadastro = date('Y-m-d H:i:s');
-    $valorAnuncio = str_replace(',', '.', $_POST['valorAnuncio']);
+    $valorAnuncio = $_POST['valorAnuncio'];
+    
+    // Limpar a máscara do valor (remove R$, espaços e converte vírgula para ponto)
+    $valorAnuncio = str_replace(['R$', ' ', '.'], '', $valorAnuncio);
+    $valorAnuncio = str_replace(',', '.', $valorAnuncio);
+    
+    // Se o valor estiver vazio, definir como 0
+    if (empty($valorAnuncio)) {
+        $valorAnuncio = 0;
+    }
 
     $anuncio->criar($nome, $imagem, $link, $ativo, $destaque, $data_cadastro, $valorAnuncio, $texto);
     header('Location: portal.php');
@@ -84,7 +93,7 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="form-row">
                     <div class="form-group">
                         <label for="valorAnuncio"><i class="fas fa-money-bill-wave"></i> Valor do Anúncio (R$)</label>
-                        <input type="number" step="0.01" min="0" name="valorAnuncio" id="valorAnuncio" placeholder="Valor cobrado pelo anúncio" required>
+                    <input type="text" name="valorAnuncio" id="valorAnuncio" placeholder="R$ 0,00" required>
                     </div>
                     <div class="form-group" style="display: flex; align-items: center; gap: 2rem; margin-top: 2.2rem;">
                         <label style="margin: 0; display: flex; align-items: center; gap: 0.5rem;">

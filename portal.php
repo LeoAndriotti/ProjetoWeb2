@@ -29,8 +29,14 @@ $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
 if ($dados_usuario) {
     $nome_usuario = $dados_usuario['nome'];
     $id_usuario = $dados_usuario['id'];
-    $profissao_usuario = $profissao->lerPorId($dados_usuario['profissao']);
-    $tipo_usuario = $profissao_usuario['nome'] ?? '';
+    
+    // Verificar se o usuário tem profissão definida
+    if (isset($dados_usuario['profissao']) && $dados_usuario['profissao']) {
+        $profissao_usuario = $profissao->lerPorId($dados_usuario['profissao']);
+        $tipo_usuario = $profissao_usuario['nome'] ?? 'Usuário';
+    } else {
+        $tipo_usuario = 'Usuário';
+    }
 } else {
     header('Location: logout.php');
     exit();
@@ -80,6 +86,7 @@ function saudacao() {
 
     <!-- ====== CONTEÚDO PRINCIPAL ====== -->
     <div class="portal-container">
+        <div class="portal-add-btn-container">
         <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
             <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
         <?php elseif (strtolower($tipo_usuario) === 'anunciante'): ?>
@@ -89,6 +96,7 @@ function saudacao() {
             <a href="cadastrarNoticia.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Notícia</a>
             <a href="cadastrarAnuncio.php" class="portal-add-btn"><i class="fas fa-plus"></i> Adicionar Anúncio</a>
         <?php endif; ?>
+        </div>
         
         <h2 class="portal-section-title">
             <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
