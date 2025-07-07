@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (valorInput) {
         function formatarMoeda(valor) {
             valor = valor.replace(/\D/g, '');
-            if (valor === '') return '';
-            while (valor.length < 3) valor = '0' + valor; // Garante pelo menos 3 dígitos
+            if (valor === '') return 'R$ 0,00';
+            while (valor.length < 3) valor = '0' + valor;
             let reais = valor.slice(0, -2);
             let centavos = valor.slice(-2);
             reais = reais.replace(/^0+/, '') || '0';
@@ -168,48 +168,50 @@ document.addEventListener('DOMContentLoaded', function() {
             return `R$ ${reaisFormatados},${centavos}`;
         }
 
+        function limparNaoNumericos(valor) {
+            return valor.replace(/\D/g, '');
+        }
+
         valorInput.addEventListener('input', function(e) {
-            const cursor = valorInput.selectionStart;
-            const valorFormatado = formatarMoeda(e.target.value);
-            e.target.value = valorFormatado;
+            let numeros = limparNaoNumericos(this.value);
+            this.value = formatarMoeda(numeros);
         });
 
         valorInput.addEventListener('focus', function() {
-            if (this.value === '') {
-                this.value = 'R$ 0,00';
-            } else {
-                this.value = formatarMoeda(this.value);
-            }
+            let numeros = limparNaoNumericos(this.value);
+            this.value = formatarMoeda(numeros);
         });
 
         valorInput.addEventListener('blur', function() {
-            if (this.value === 'R$ 0,00' || this.value === 'R$ ') {
-                this.value = '';
-            } else {
-                this.value = formatarMoeda(this.value);
-            }
+            let numeros = limparNaoNumericos(this.value);
+            this.value = formatarMoeda(numeros);
         });
 
         valorInput.addEventListener('paste', function(e) {
             e.preventDefault();
             let texto = (e.clipboardData || window.clipboardData).getData('text');
-            this.value = formatarMoeda(texto);
+            let numeros = limparNaoNumericos(texto);
+            this.value = formatarMoeda(numeros);
         });
 
         valorInput.addEventListener('keydown', function(e) {
-            // Permitir: backspace, delete, tab, escape, enter, setas
-            const allowedKeys = [8, 9, 27, 13, 37, 38, 39, 40, 46];
+            // Permitir: backspace, delete, tab, escape, enter, setas, home, end
+            const teclasPermitidas = [8, 9, 27, 13, 37, 38, 39, 40, 35, 36, 46];
             // Permitir números (0-9)
-            if ((e.keyCode >= 48 && e.keyCode <= 57) || 
-                (e.keyCode >= 96 && e.keyCode <= 105) || 
-                allowedKeys.includes(e.keyCode)) {
-                return;
+            if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+                return true;
+            }
+            // Permitir teclas especiais
+            if (teclasPermitidas.includes(e.keyCode)) {
+                return true;
             }
             // Permitir Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
             if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 88)) {
-                return;
+                return true;
             }
+            // Bloquear todas as outras teclas
             e.preventDefault();
+            return false;
         });
     }
     

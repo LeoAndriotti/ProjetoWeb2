@@ -73,6 +73,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
 
 $anuncios_ativos = $anuncio->lerAtivos();
 $anuncios_destaque = $anuncio->lerDestaques();
+
+// Buscar um anúncio aleatório ativo para o pop-up
+$anuncio_aleatorio = null;
+if (!empty($anuncios_ativos)) {
+    $anuncio_aleatorio = $anuncios_ativos[array_rand($anuncios_ativos)];
+}
+
+// Selecionar anúncios para as laterais
+$anuncio_lateral_esquerda = $anuncios_ativos[0] ?? null;
+$anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -94,52 +104,149 @@ $anuncios_destaque = $anuncio->lerDestaques();
     <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
       <i class="fa-solid fa-moon"></i>
     </button>
-        
-    <!-- Container flexível para previsão do tempo e moedas -->
-    <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
-        
-        <?php include './components/moedas.php'; ?>
-       
-    </div>
-
-    <!-- Botão de login fixo no topo direito -->
-    <a href="logar.php" class="login-btn" style="position: absolute; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
     
-    <!-- Cabeçalho principal (pode ser expandido para navegação) -->
-    <header class="main-header">
-        <div class="header-content">
-            <!-- Espaço reservado para conteúdo do cabeçalho -->
-        </div>
-    </header>
-    <!-- Filtro de busca -->
-        <form method="get" class="filtro-busca-form">
-            <div>
-                <label for="titulo"><i class="fa-solid fa-heading"></i> Título:</label>
-                <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Buscar por título...">
-            </div>
-            <div>
-                <label for="autor"><i class="fa-solid fa-user"></i> Autor:</label>
-                <select name="autor" id="autor">
-                    <option value="">Todos</option>
-                    <?php foreach ($autores as $a): ?>
-                        <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div>
-                <label for="categoria"><i class="fa-solid fa-list"></i> Categoria:</label>
-                <select name="categoria" id="categoria">
-                    <option value="">Todas</option>
-                    <?php foreach ($categorias as $cat): ?>
-                        <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
-        </form>
+    <!-- Container com linhas verticais decorativas -->
+    <div class="container-linhas-verticais">
+      <div class="linha-vertical linha-vertical-esquerda"></div>
+      <div class="linha-vertical linha-vertical-direita"></div>
 
-    <main class="news-container">
-        
+      <!-- Container flexível para previsão do tempo e moedas -->
+      <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
+          <?php include './components/moedas.php'; ?>
+      </div>
+
+      <!-- Botão de login fixo no topo direito -->
+      <a href="logar.php" class="login-btn" style="position: absolute; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
+      <!-- Cabeçalho principal (pode ser expandido para navegação) -->
+      <header class="main-header">
+          <div class="header-content">
+              <!-- Espaço reservado para conteúdo do cabeçalho -->
+          </div>
+      </header>
+      <!-- Filtro de busca -->
+      <form method="get" class="filtro-busca-form">
+        <div>
+            <label for="titulo"><i class="fa-solid fa-heading"></i> Título:</label>
+            <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Buscar por título...">
+        </div>
+        <div>
+            <label for="autor"><i class="fa-solid fa-user"></i> Autor:</label>
+            <select name="autor" id="autor">
+                <option value="">Todos</option>
+                <?php foreach ($autores as $a): ?>
+                    <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <label for="categoria"><i class="fa-solid fa-list"></i> Categoria:</label>
+            <select name="categoria" id="categoria">
+                <option value="">Todas</option>
+                <?php foreach ($categorias as $cat): ?>
+                    <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
+      </form>
+
+      <!-- Carrossel de Anúncios Ativos (tipo marquee/ticker, visual outdoor) -->
+      <?php if (!empty($anuncios_ativos)): ?>
+      <div class="anuncios-ticker" style="width:100vw;overflow:hidden;background:#111;margin:32px 0 0 0;min-height:160px;">
+        <div class="anuncios-ticker-inner" style="display:flex;align-items:stretch;animation:anuncios-scroll 40s linear infinite;">
+          <?php foreach ($anuncios_ativos as $an): ?>
+            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-banner">
+              <?php if (!empty($an['imagem'])): ?>
+                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" />
+              <?php endif; ?>
+              <?php if (!empty($an['texto'])): ?>
+                <span class="anuncio-banner-texto"><?php echo htmlspecialchars($an['texto']); ?></span>
+              <?php endif; ?>
+            </a>
+          <?php endforeach; ?>
+          <?php foreach ($anuncios_ativos as $an): ?>
+            <!-- Duplicação para loop contínuo -->
+            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-banner">
+              <?php if (!empty($an['imagem'])): ?>
+                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" />
+              <?php endif; ?>
+              <?php if (!empty($an['texto'])): ?>
+                <span class="anuncio-banner-texto"><?php echo htmlspecialchars($an['texto']); ?></span>
+              <?php endif; ?>
+            </a>
+          <?php endforeach; ?>
+        </div>
+        <style>
+          @keyframes anuncios-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .anuncios-ticker {
+            border-radius: 18px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+            min-height: 160px;
+            background: #111;
+            position: relative;
+          }
+          .anuncios-ticker-inner {
+            height: 160px;
+            min-height: 160px;
+            gap: 0;
+          }
+          .anuncio-banner {
+            display: flex;
+            align-items: stretch;
+            position: relative;
+            min-width: 320px;
+            height: 160px;
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+            border-right: 2px solid #222;
+            text-decoration: none;
+          }
+          .anuncio-banner:last-child { border-right: none; }
+          .anuncio-banner img {
+            height: 100%;
+            width: auto;
+            min-width: 100%;
+            object-fit: cover;
+            display: block;
+            transition: filter 0.2s;
+          }
+          .anuncio-banner-texto {
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            background: linear-gradient(transparent,rgba(0,0,0,0.85) 90%);
+            color: #fff;
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 18px 16px 10px 16px;
+            text-align: left;
+            text-shadow: 0 2px 8px #000, 0 1px 0 #222;
+            width: 100%;
+            box-sizing: border-box;
+            pointer-events: none;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 18px;
+          }
+          .anuncio-banner:hover img {
+            filter: brightness(0.85) blur(1px);
+          }
+          .anuncio-banner:hover .anuncio-banner-texto {
+            color: #ffe066;
+          }
+          @media (max-width: 700px) {
+            .anuncios-ticker-inner, .anuncio-banner { height: 90px; min-height: 90px; }
+            .anuncio-banner { min-width: 160px; }
+            .anuncio-banner-texto { font-size: 0.95rem; padding: 10px 8px 6px 8px; }
+          }
+          .anuncios-ticker-inner:hover { animation-play-state: paused; }
+        </style>
+      </div>
+      <?php endif; ?>
+
+      <main class="news-container">
         <!-- Seção de destaque com logo e slogan -->
         <section class="featured-news" style="text-align:center;">
             <img src="./assets/img/logo2.png" alt="Logo CSL Times" class="logo-img" style="display:block;margin:0 auto 10px auto;max-width:250px;">
@@ -164,10 +271,9 @@ $anuncios_destaque = $anuncio->lerDestaques();
                 </div>
             <?php endif; ?>
         </section>
-    </main>
+      </main>
 
-    <!-- Rodapé fixo com redes sociais e direitos autorais -->
-    <footer class="footer-main" style="display: none;">
+      <footer class="footer-main" style="display: none;">
         <div class="social-links">
             <a href="https://br.linkedin.com" class="linkedin" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
             <a href="https://pt-br.facebook.com" class="facebook" title="Facebook"><i class="fab fa-facebook"></i></a>
@@ -178,43 +284,133 @@ $anuncios_destaque = $anuncio->lerDestaques();
         <div class="copyright">
             &copy; <?php echo date('Y'); ?> CSL Times. Todos os direitos reservados.
         </div>
-    </footer>
+      </footer>
+    </div>
 
-    <!-- Pop-up de anúncios em destaque -->
-    <div id="popup-anuncio-destaque" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.75);z-index:9999;justify-content:center;align-items:center;">
-      <div style="background:#fff;padding:48px 36px 36px 36px;border-radius:24px;box-shadow:0 12px 48px rgba(0,0,0,0.35);max-width:1200px;max-height:90vh;display:flex;flex-direction:column;align-items:center;position:relative;overflow-y:auto;">
-        <button id="fechar-popup-anuncio" style="position:absolute;top:18px;right:28px;background:none;border:none;font-size:3rem;cursor:pointer;color:#888;z-index:2;">&times;</button>
-        <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:center;width:100%;">
-          <?php foreach ($anuncios_destaque as $an): ?>
-            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" style="background:#f8f8f8;border-radius:18px;box-shadow:0 4px 24px rgba(0,0,0,0.10);padding:32px 24px;display:flex;flex-direction:column;align-items:center;max-width:340px;min-width:260px;text-decoration:none;color:#222;transition:box-shadow 0.2s;">
-              <?php if (!empty($an['imagem'])): ?>
-                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" style="max-width:280px;max-height:120px;border-radius:12px;object-fit:cover;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.10);">
-              <?php endif; ?>
-              <span style="font-size:1.3rem;font-weight:700;text-align:center;line-height:1.3;margin-bottom:8px;display:block;overflow-wrap:break-word;">
-                <?php echo htmlspecialchars($an['texto']); ?>
-              </span>
+    <!-- Pop-up de anúncio aleatório -->
+    <?php if ($anuncio_aleatorio): ?>
+    <div id="popup-anuncio-aleatorio" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:10000;justify-content:center;align-items:center;">
+      <div style="background:#fff;padding:40px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:600px;max-height:80vh;display:flex;flex-direction:column;align-items:center;position:relative;overflow-y:auto;text-align:center;">
+        <button id="fechar-popup-aleatorio" style="position:absolute;top:15px;right:20px;background:none;border:none;font-size:2.5rem;cursor:pointer;color:#666;z-index:2;">&times;</button>
+        
+        <div style="margin-bottom:20px;">
+          <h3 style="color:#333;margin-bottom:15px;font-size:1.5rem;"><?php echo htmlspecialchars($anuncio_aleatorio['nome']); ?></h3>
+          
+          <?php if (!empty($anuncio_aleatorio['imagem'])): ?>
+            <img src="<?php echo htmlspecialchars($anuncio_aleatorio['imagem']); ?>" alt="Anúncio" style="max-width:100%;max-height:300px;border-radius:12px;object-fit:cover;margin-bottom:20px;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+          <?php endif; ?>
+          
+          <?php if (!empty($anuncio_aleatorio['texto'])): ?>
+            <p style="color:#555;line-height:1.6;margin-bottom:25px;font-size:1.1rem;"><?php echo htmlspecialchars($anuncio_aleatorio['texto']); ?></p>
+          <?php endif; ?>
+          
+          <?php if (!empty($anuncio_aleatorio['link'])): ?>
+            <a href="<?php echo htmlspecialchars($anuncio_aleatorio['link']); ?>" target="_blank" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);color:#fff;padding:12px 30px;border-radius:25px;text-decoration:none;font-weight:600;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(102,126,234,0.4);">
+              Ver Mais <i class="fa-solid fa-external-link-alt" style="margin-left:8px;"></i>
             </a>
-          <?php endforeach; ?>
+          <?php endif; ?>
         </div>
       </div>
     </div>
+    
     <script>
-    let popupDestaqueTimer = null;
-    function mostrarPopupDestaque() {
-      document.getElementById('popup-anuncio-destaque').style.display = 'flex';
+    function mostrarPopupAleatorio() {
+      document.getElementById('popup-anuncio-aleatorio').style.display = 'flex';
     }
-    function esconderPopupDestaque() {
-      document.getElementById('popup-anuncio-destaque').style.display = 'none';
-      clearTimeout(popupDestaqueTimer);
-      popupDestaqueTimer = setTimeout(mostrarPopupDestaque, 30000); // 30 segundos
+    
+    function esconderPopupAleatorio() {
+      document.getElementById('popup-anuncio-aleatorio').style.display = 'none';
     }
+    
     window.addEventListener('DOMContentLoaded', function() {
-      <?php if (!empty($anuncios_destaque)): ?>
-        setTimeout(mostrarPopupDestaque, 2000);
-        document.getElementById('fechar-popup-anuncio').onclick = esconderPopupDestaque;
-      <?php endif; ?>
+      // Mostrar pop-up aleatório após 3 segundos
+      setTimeout(mostrarPopupAleatorio, 3000);
+      
+      // Fechar pop-up ao clicar no X
+      document.getElementById('fechar-popup-aleatorio').onclick = esconderPopupAleatorio;
+      
+      // Fechar pop-up ao clicar fora dele
+      document.getElementById('popup-anuncio-aleatorio').onclick = function(e) {
+        if (e.target === this) {
+          esconderPopupAleatorio();
+        }
+      };
+      
+      // Fechar pop-up com tecla ESC
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          esconderPopupAleatorio();
+        }
+      });
     });
     </script>
+    <?php endif; ?>
+
+    <!-- BANNERS LATERAIS DE ANÚNCIOS ATIVOS -->
+    <?php if ($anuncio_lateral_esquerda): ?>
+      <div class="anuncio-lateral anuncio-lateral-esquerda">
+        <a href="<?php echo htmlspecialchars($anuncio_lateral_esquerda['link']); ?>" target="_blank">
+          <?php if (!empty($anuncio_lateral_esquerda['imagem'])): ?>
+            <img src="<?php echo htmlspecialchars($anuncio_lateral_esquerda['imagem']); ?>" alt="Anúncio" />
+          <?php endif; ?>
+          <?php if (!empty($anuncio_lateral_esquerda['texto'])): ?>
+            <span><?php echo htmlspecialchars($anuncio_lateral_esquerda['texto']); ?></span>
+          <?php endif; ?>
+        </a>
+      </div>
+    <?php endif; ?>
+    <?php if ($anuncio_lateral_direita): ?>
+      <div class="anuncio-lateral anuncio-lateral-direita">
+        <a href="<?php echo htmlspecialchars($anuncio_lateral_direita['link']); ?>" target="_blank">
+          <?php if (!empty($anuncio_lateral_direita['imagem'])): ?>
+            <img src="<?php echo htmlspecialchars($anuncio_lateral_direita['imagem']); ?>" alt="Anúncio" />
+          <?php endif; ?>
+          <?php if (!empty($anuncio_lateral_direita['texto'])): ?>
+            <span><?php echo htmlspecialchars($anuncio_lateral_direita['texto']); ?></span>
+          <?php endif; ?>
+        </a>
+      </div>
+    <?php endif; ?>
+    <!-- SUGESTÃO DE CSS: Adicione ao seu style.css -->
+    <!--
+    .anuncio-lateral {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 160px;
+      z-index: 2000;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      border-radius: 16px;
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .anuncio-lateral-esquerda {
+      left: 18px;
+    }
+    .anuncio-lateral-direita {
+      right: 18px;
+    }
+    .anuncio-lateral img {
+      max-width: 140px;
+      max-height: 320px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      object-fit: contain;
+    }
+    .anuncio-lateral span {
+      color: #222;
+      font-size: 1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+    @media (max-width: 1100px) {
+      .anuncio-lateral { display: none; }
+    }
+    -->
 
     <!-- Scripts da página inicial - movidos para o final do body -->
     <script src="./scripts/index.js"></script>
