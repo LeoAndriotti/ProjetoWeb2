@@ -1324,7 +1324,16 @@ body {
 }
 
 .news-container {
+    padding-left: 32px;
+    padding-right: 32px;
     padding-bottom: 5rem;
+}
+
+@media (max-width: 700px) {
+    .news-container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 }
 
 /* Botão sair/logout */

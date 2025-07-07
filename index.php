@@ -74,15 +74,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entrar'])) {
 $anuncios_ativos = $anuncio->lerAtivos();
 $anuncios_destaque = $anuncio->lerDestaques();
 
-// Buscar um anúncio aleatório ativo para o pop-up
+// Buscar um anúncio aleatório que seja ativo E destaque para o pop-up
 $anuncio_aleatorio = null;
-if (!empty($anuncios_ativos)) {
-    $anuncio_aleatorio = $anuncios_ativos[array_rand($anuncios_ativos)];
+if (!empty($anuncios_destaque)) {
+    $anuncio_aleatorio = $anuncios_destaque[array_rand($anuncios_destaque)];
 }
-
-// Selecionar anúncios para as laterais
-$anuncio_lateral_esquerda = $anuncios_ativos[0] ?? null;
-$anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -153,23 +149,10 @@ $anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
       <!-- Carrossel de Anúncios Ativos (tipo marquee/ticker, visual outdoor) -->
       <?php if (!empty($anuncios_ativos)): ?>
       <div class="anuncios-ticker" style="width:100vw;overflow:hidden;background:#111;margin:32px 0 0 0;min-height:160px;">
-        <div class="anuncios-ticker-inner" style="display:flex;align-items:stretch;animation:anuncios-scroll 40s linear infinite;">
+        <div class="anuncios-ticker-inner" id="anuncios-ticker-inner" style="display:flex;align-items:stretch;">
           <?php foreach ($anuncios_ativos as $an): ?>
             <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-banner">
-              <?php if (!empty($an['imagem'])): ?>
-                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" />
-              <?php endif; ?>
-              <?php if (!empty($an['texto'])): ?>
-                <span class="anuncio-banner-texto"><?php echo htmlspecialchars($an['texto']); ?></span>
-              <?php endif; ?>
-            </a>
-          <?php endforeach; ?>
-          <?php foreach ($anuncios_ativos as $an): ?>
-            <!-- Duplicação para loop contínuo -->
-            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-banner">
-              <?php if (!empty($an['imagem'])): ?>
-                <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" />
-              <?php endif; ?>
+              <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
               <?php if (!empty($an['texto'])): ?>
                 <span class="anuncio-banner-texto"><?php echo htmlspecialchars($an['texto']); ?></span>
               <?php endif; ?>
@@ -192,6 +175,7 @@ $anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
             height: 160px;
             min-height: 160px;
             gap: 0;
+            animation: anuncios-scroll 40s linear infinite;
           }
           .anuncio-banner {
             display: flex;
@@ -210,7 +194,7 @@ $anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
             height: 100%;
             width: auto;
             min-width: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
             transition: filter 0.2s;
           }
@@ -243,6 +227,27 @@ $anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
           }
           .anuncios-ticker-inner:hover { animation-play-state: paused; }
         </style>
+        <script>
+        // Duplicar banners até preencher pelo menos 2x a largura do container
+        window.addEventListener('DOMContentLoaded', function() {
+          const ticker = document.getElementById('anuncios-ticker-inner');
+          const parent = ticker.parentElement;
+          let banners = Array.from(ticker.children);
+          let totalWidth = ticker.scrollWidth;
+          let parentWidth = parent.offsetWidth;
+          // Duplicar até garantir loop perfeito
+          while (totalWidth < parentWidth * 2) {
+            banners.forEach(banner => {
+              const clone = banner.cloneNode(true);
+              ticker.appendChild(clone);
+            });
+            totalWidth = ticker.scrollWidth;
+          }
+          // Ajustar animação para a largura real
+          const duration = totalWidth / 100; // 100px por segundo
+          ticker.style.animation = `anuncios-scroll ${duration}s linear infinite`;
+        });
+        </script>
       </div>
       <?php endif; ?>
 
@@ -345,72 +350,6 @@ $anuncio_lateral_direita = $anuncios_ativos[1] ?? ($anuncios_ativos[0] ?? null);
     });
     </script>
     <?php endif; ?>
-
-    <!-- BANNERS LATERAIS DE ANÚNCIOS ATIVOS -->
-    <?php if ($anuncio_lateral_esquerda): ?>
-      <div class="anuncio-lateral anuncio-lateral-esquerda">
-        <a href="<?php echo htmlspecialchars($anuncio_lateral_esquerda['link']); ?>" target="_blank">
-          <?php if (!empty($anuncio_lateral_esquerda['imagem'])): ?>
-            <img src="<?php echo htmlspecialchars($anuncio_lateral_esquerda['imagem']); ?>" alt="Anúncio" />
-          <?php endif; ?>
-          <?php if (!empty($anuncio_lateral_esquerda['texto'])): ?>
-            <span><?php echo htmlspecialchars($anuncio_lateral_esquerda['texto']); ?></span>
-          <?php endif; ?>
-        </a>
-      </div>
-    <?php endif; ?>
-    <?php if ($anuncio_lateral_direita): ?>
-      <div class="anuncio-lateral anuncio-lateral-direita">
-        <a href="<?php echo htmlspecialchars($anuncio_lateral_direita['link']); ?>" target="_blank">
-          <?php if (!empty($anuncio_lateral_direita['imagem'])): ?>
-            <img src="<?php echo htmlspecialchars($anuncio_lateral_direita['imagem']); ?>" alt="Anúncio" />
-          <?php endif; ?>
-          <?php if (!empty($anuncio_lateral_direita['texto'])): ?>
-            <span><?php echo htmlspecialchars($anuncio_lateral_direita['texto']); ?></span>
-          <?php endif; ?>
-        </a>
-      </div>
-    <?php endif; ?>
-    <!-- SUGESTÃO DE CSS: Adicione ao seu style.css -->
-    <!--
-    .anuncio-lateral {
-      position: fixed;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 160px;
-      z-index: 2000;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-      border-radius: 16px;
-      padding: 12px 8px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
-    .anuncio-lateral-esquerda {
-      left: 18px;
-    }
-    .anuncio-lateral-direita {
-      right: 18px;
-    }
-    .anuncio-lateral img {
-      max-width: 140px;
-      max-height: 320px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-      object-fit: contain;
-    }
-    .anuncio-lateral span {
-      color: #222;
-      font-size: 1rem;
-      text-align: center;
-      font-weight: 500;
-    }
-    @media (max-width: 1100px) {
-      .anuncio-lateral { display: none; }
-    }
-    -->
 
     <!-- Scripts da página inicial - movidos para o final do body -->
     <script src="./scripts/index.js"></script>
