@@ -105,3 +105,52 @@ document.addEventListener('DOMContentLoaded', function() {
         updateThemeBtn();
     };
 });
+
+// POP-UP DE ANÚNCIO ALEATÓRIO
+window.addEventListener('DOMContentLoaded', function() {
+  var popup = document.getElementById('popup-anuncio-aleatorio');
+  var btnFechar = document.getElementById('fechar-popup-aleatorio');
+  if (!popup || !btnFechar) return;
+
+  function mostrarPopupAleatorio() {
+    popup.style.display = 'flex';
+  }
+  function esconderPopupAleatorio() {
+    popup.style.display = 'none';
+  }
+  setTimeout(mostrarPopupAleatorio, 3000);
+  btnFechar.onclick = esconderPopupAleatorio;
+  popup.onclick = function(e) {
+    if (e.target === popup) esconderPopupAleatorio();
+  };
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') esconderPopupAleatorio();
+  });
+});
+
+// Carrossel vertical: duplicar banners até preencher pelo menos 3x a altura do container
+window.addEventListener('DOMContentLoaded', function() {
+  function duplicarCarrossel(id) {
+    const inner = document.getElementById(id);
+    if (!inner) return;
+    const parent = inner.parentElement;
+    let banners = Array.from(inner.children);
+    let totalHeight = inner.scrollHeight;
+    let parentHeight = parent.offsetHeight;
+    let maxLoops = 10; // segurança para evitar loop infinito
+    let loops = 0;
+    while (totalHeight < parentHeight * 3 && loops < maxLoops) {
+      banners.forEach(banner => {
+        const clone = banner.cloneNode(true);
+        inner.appendChild(clone);
+      });
+      totalHeight = inner.scrollHeight;
+      loops++;
+    }
+    // Ajustar animação para a altura real
+    const duration = totalHeight / 40; // 40px por segundo
+    inner.style.animation = `carrossel-vertical-scroll ${duration}s linear infinite`;
+  }
+  duplicarCarrossel('carrossel-vertical-esquerda');
+  duplicarCarrossel('carrossel-vertical-direita');
+});
