@@ -89,7 +89,7 @@ if (!empty($anuncios_destaque)) {
     <title>CSL Times</title>
     <!-- Estilos principais do site -->
     <link rel="stylesheet" href="./uploads/style.css">
-    <link rel="stylesheet" href="./uploads/Index.css">
+    <link rel="stylesheet" href="./uploads/index.css">
     <link rel="stylesheet" href="./uploads/previsao_tempo.css">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -112,7 +112,7 @@ if (!empty($anuncios_destaque)) {
       </div>
 
       <!-- Botão de login fixo no topo direito -->
-      <a href="logar.php" class="login-btn" style="position: absolute; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
+      <a href="logar.php" class="login-btn" style="position: fixed; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>
       <!-- Cabeçalho principal (pode ser expandido para navegação) -->
       <header class="main-header">
           <div class="header-content">
@@ -146,108 +146,31 @@ if (!empty($anuncios_destaque)) {
         <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
       </form>
 
-      <!-- Carrossel de Anúncios Ativos (tipo marquee/ticker, visual outdoor) -->
+      <!-- Carrosseis verticais de anúncios ativos nas laterais -->
       <?php if (!empty($anuncios_ativos)): ?>
-      <div class="anuncios-ticker" style="width:100vw;overflow:hidden;background:#111;margin:32px 0 0 0;min-height:160px;">
-        <div class="anuncios-ticker-inner" id="anuncios-ticker-inner" style="display:flex;align-items:stretch;">
+      <div class="carrossel-vertical carrossel-vertical-esquerda">
+        <div class="carrossel-vertical-inner" id="carrossel-vertical-esquerda">
           <?php foreach ($anuncios_ativos as $an): ?>
-            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-banner">
+            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
               <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
-              <?php if (!empty($an['texto'])): ?>
-                <span class="anuncio-banner-texto"><?php echo htmlspecialchars($an['texto']); ?></span>
+              <?php if (!empty($an['nome'])): ?>
+                <span class="anuncio-vertical-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
               <?php endif; ?>
             </a>
           <?php endforeach; ?>
         </div>
-        <style>
-          @keyframes anuncios-scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .anuncios-ticker {
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.25);
-            min-height: 160px;
-            background: #111;
-            position: relative;
-          }
-          .anuncios-ticker-inner {
-            height: 160px;
-            min-height: 160px;
-            gap: 0;
-            animation: anuncios-scroll 40s linear infinite;
-          }
-          .anuncio-banner {
-            display: flex;
-            align-items: stretch;
-            position: relative;
-            min-width: 320px;
-            height: 160px;
-            margin: 0;
-            background: #000;
-            overflow: hidden;
-            border-right: 2px solid #222;
-            text-decoration: none;
-          }
-          .anuncio-banner:last-child { border-right: none; }
-          .anuncio-banner img {
-            height: 100%;
-            width: auto;
-            min-width: 100%;
-            object-fit: contain;
-            display: block;
-            transition: filter 0.2s;
-          }
-          .anuncio-banner-texto {
-            position: absolute;
-            left: 0; right: 0; bottom: 0;
-            background: linear-gradient(transparent,rgba(0,0,0,0.85) 90%);
-            color: #fff;
-            font-size: 1.15rem;
-            font-weight: 600;
-            padding: 18px 16px 10px 16px;
-            text-align: left;
-            text-shadow: 0 2px 8px #000, 0 1px 0 #222;
-            width: 100%;
-            box-sizing: border-box;
-            pointer-events: none;
-            border-bottom-left-radius: 18px;
-            border-bottom-right-radius: 18px;
-          }
-          .anuncio-banner:hover img {
-            filter: brightness(0.85) blur(1px);
-          }
-          .anuncio-banner:hover .anuncio-banner-texto {
-            color: #ffe066;
-          }
-          @media (max-width: 700px) {
-            .anuncios-ticker-inner, .anuncio-banner { height: 90px; min-height: 90px; }
-            .anuncio-banner { min-width: 160px; }
-            .anuncio-banner-texto { font-size: 0.95rem; padding: 10px 8px 6px 8px; }
-          }
-          .anuncios-ticker-inner:hover { animation-play-state: paused; }
-        </style>
-        <script>
-        // Duplicar banners até preencher pelo menos 2x a largura do container
-        window.addEventListener('DOMContentLoaded', function() {
-          const ticker = document.getElementById('anuncios-ticker-inner');
-          const parent = ticker.parentElement;
-          let banners = Array.from(ticker.children);
-          let totalWidth = ticker.scrollWidth;
-          let parentWidth = parent.offsetWidth;
-          // Duplicar até garantir loop perfeito
-          while (totalWidth < parentWidth * 2) {
-            banners.forEach(banner => {
-              const clone = banner.cloneNode(true);
-              ticker.appendChild(clone);
-            });
-            totalWidth = ticker.scrollWidth;
-          }
-          // Ajustar animação para a largura real
-          const duration = totalWidth / 100; // 100px por segundo
-          ticker.style.animation = `anuncios-scroll ${duration}s linear infinite`;
-        });
-        </script>
+      </div>
+      <div class="carrossel-vertical carrossel-vertical-direita">
+        <div class="carrossel-vertical-inner" id="carrossel-vertical-direita">
+          <?php foreach ($anuncios_ativos as $an): ?>
+            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
+              <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
+              <?php if (!empty($an['nome'])): ?>
+                <span class="anuncio-vertical-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
+              <?php endif; ?>
+            </a>
+          <?php endforeach; ?>
+        </div>
       </div>
       <?php endif; ?>
 
@@ -317,38 +240,6 @@ if (!empty($anuncios_destaque)) {
         </div>
       </div>
     </div>
-    
-    <script>
-    function mostrarPopupAleatorio() {
-      document.getElementById('popup-anuncio-aleatorio').style.display = 'flex';
-    }
-    
-    function esconderPopupAleatorio() {
-      document.getElementById('popup-anuncio-aleatorio').style.display = 'none';
-    }
-    
-    window.addEventListener('DOMContentLoaded', function() {
-      // Mostrar pop-up aleatório após 3 segundos
-      setTimeout(mostrarPopupAleatorio, 3000);
-      
-      // Fechar pop-up ao clicar no X
-      document.getElementById('fechar-popup-aleatorio').onclick = esconderPopupAleatorio;
-      
-      // Fechar pop-up ao clicar fora dele
-      document.getElementById('popup-anuncio-aleatorio').onclick = function(e) {
-        if (e.target === this) {
-          esconderPopupAleatorio();
-        }
-      };
-      
-      // Fechar pop-up com tecla ESC
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          esconderPopupAleatorio();
-        }
-      });
-    });
-    </script>
     <?php endif; ?>
 
     <!-- Scripts da página inicial - movidos para o final do body -->

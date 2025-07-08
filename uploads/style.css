@@ -1324,16 +1324,9 @@ body {
 }
 
 .news-container {
+    padding-bottom: 5rem;
     padding-left: 32px;
     padding-right: 32px;
-    padding-bottom: 5rem;
-}
-
-@media (max-width: 700px) {
-    .news-container {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
 }
 
 /* Botão sair/logout */
@@ -1573,4 +1566,11 @@ body.dark-mode .login-btn {
 .ticker-item:hover {
     text-decoration: none !important;
     color: inherit;
+}
+
+@media (max-width: 700px) {
+  .news-container {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 } 
