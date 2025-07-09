@@ -1402,7 +1402,7 @@ button.Pdf-btn:hover {
 .filtro-busca-form > div {
   display: flex;
   flex-direction: column;
-  min-width: 220px;
+  min-width: 280px;
   margin-bottom: 0;
 }
 .filtro-busca-form label {

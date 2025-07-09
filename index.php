@@ -119,32 +119,7 @@ if (!empty($anuncios_destaque)) {
               <!-- Espaço reservado para conteúdo do cabeçalho -->
           </div>
       </header>
-      <!-- Filtro de busca -->
-      <form method="get" class="filtro-busca-form">
-        <div>
-            <label for="titulo"><i class="fa-solid fa-heading"></i> Título:</label>
-            <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Buscar por título...">
-        </div>
-        <div>
-            <label for="autor"><i class="fa-solid fa-user"></i> Autor:</label>
-            <select name="autor" id="autor">
-                <option value="">Todos</option>
-                <?php foreach ($autores as $a): ?>
-                    <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div>
-            <label for="categoria"><i class="fa-solid fa-list"></i> Categoria:</label>
-            <select name="categoria" id="categoria">
-                <option value="">Todas</option>
-                <?php foreach ($categorias as $cat): ?>
-                    <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
-      </form>
+      
 
       <!-- Carrosseis verticais de anúncios ativos nas laterais -->
       <?php if (!empty($anuncios_ativos)): ?>
@@ -190,6 +165,23 @@ if (!empty($anuncios_destaque)) {
         <!-- Seção das últimas notícias -->
         <section class="ultimas-noticias">
             <h2>Últimas Notícias</h2>
+            <!-- Filtro de busca -->
+      <form method="get" class="filtro-busca-form" style="gap: 0.5rem; padding: 0.7rem 1rem 0.7rem 1rem; max-width: 600px; font-size: 0.95rem;">
+        <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Título" style="min-width: 120px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+        <select name="autor" id="autor" style="min-width: 100px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+            <option value="">Autor</option>
+            <?php foreach ($autores as $a): ?>
+                <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <select name="categoria" id="categoria" style="min-width: 100px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+            <option value="">Categoria</option>
+            <?php foreach ($categorias as $cat): ?>
+                <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" class="submit-btn" style="height: 32px; font-size: 0.95rem; padding: 0 16px; border-radius: 6px;"><i class="fa-solid fa-filter"></i>Buscar</button>
+      </form>
             <?php if (!empty($ultimas_noticias)): ?>
                 <div class="news-grid">
                     <!-- Renderiza cada notícia usando o componente reutilizável -->

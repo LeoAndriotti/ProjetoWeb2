@@ -34,6 +34,33 @@ if (isset($_SESSION['usuario_id'])) {
 $todas_noticias = $noticias->ler();
 $anuncios_ativos = $anuncio->lerAtivos();
 
+// Buscar autores e categorias para o filtro
+$autores = $usuario->ler();
+$categorias = $categoria->lerTodas();
+
+// Lógica de filtro
+$filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
+$filtro_autor = isset($_GET['autor']) ? $_GET['autor'] : '';
+$filtro_categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+
+$query = "SELECT * FROM noticias WHERE 1=1";
+$params = [];
+if ($filtro_titulo !== '') {
+    $query .= " AND titulo LIKE ?";
+    $params[] = "%$filtro_titulo%";
+}
+if ($filtro_autor !== '') {
+    $query .= " AND autor = ?";
+    $params[] = $filtro_autor;
+}
+if ($filtro_categoria !== '') {
+    $query .= " AND categoria = ?";
+    $params[] = $filtro_categoria;
+}
+$query .= " ORDER BY data DESC, id DESC";
+$stmt = $banco->prepare($query);
+$stmt->execute($params);
+$todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -78,7 +105,7 @@ $anuncios_ativos = $anuncio->lerAtivos();
     <!-- Menu de moedas (reutilizável) -->
     <?php include './components/moedas.php'; ?>
     <!-- Botões de navegação do usuário -->
-    <div class="index-nav" style="position: absolute; right: 30px; top: 20px; z-index: 1100;">
+    <div class="index-nav" style="position: fixed; right: 30px; top: 20px; z-index: 1100;">
         <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
             <a href="portal.php" class="login-btn">Meu Portal</a>
         <?php else: ?>
@@ -106,6 +133,23 @@ $anuncios_ativos = $anuncio->lerAtivos();
                     <p>Publique a sua notícia, acessando o portal!</p>
                 </div>
             <?php else: ?>
+                    <!-- Filtro de busca -->
+      <form method="get" class="filtro-busca-form" style="gap: 0.5rem; padding: 0.7rem 1rem 0.7rem 1rem; max-width: 600px; font-size: 0.95rem;">
+        <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Título" style="min-width: 120px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+        <select name="autor" id="autor" style="min-width: 100px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+            <option value="">Autor</option>
+            <?php foreach ($autores as $a): ?>
+                <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <select name="categoria" id="categoria" style="min-width: 100px; font-size: 0.95rem; padding: 0.4rem 0.7rem; border-radius: 6px;">
+            <option value="">Categoria</option>
+            <?php foreach ($categorias as $cat): ?>
+                <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button type="submit" class="submit-btn" style="height: 32px; font-size: 0.95rem; padding: 0 16px; border-radius: 6px;"><i class="fa-solid fa-filter"></i>Buscar</button>
+      </form>
                 <div class="news-grid">
                     <!-- Renderiza cada notícia usando o componente reutilizável -->
                     <?php foreach ($todas_noticias as $noticia): ?>
