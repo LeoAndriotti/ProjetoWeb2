@@ -3,7 +3,7 @@
 /* Cabeçalho específico para registro */
 .portal-header-portal {
     background: linear-gradient(135deg, #2c3e50, #34495e);
-    border-bottom: 3px solid #1abc9c;
+    border-bottom: 3px solid #3498db;
     position: relative;
     overflow: hidden;
 }
@@ -61,7 +61,7 @@
 
 .portal-nav a:hover {
     background: white;
-    color: #27ae60;
+    color: #3498db;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
 }
@@ -91,7 +91,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, #27ae60, #2ecc71, #27ae60);
+    background: linear-gradient(90deg, #3498db, #2980b9, #3498db);
     background-size: 200% 100%;
     animation: gradientShift 3s ease infinite;
 }
@@ -112,7 +112,7 @@
 
 .form-header i {
     font-size: 3rem;
-    color: #27ae60;
+    color: #3498db;
     margin-bottom: 1rem;
     display: block;
     animation: pulse 2s infinite;
@@ -147,7 +147,7 @@
 }
 
 .portal-form label i {
-    color: #27ae60;
+    color: #3498db;
     margin-right: 0.5rem;
     width: 20px;
     text-align: center;
@@ -171,16 +171,16 @@
 .portal-form input[type="email"]:focus,
 .portal-form input[type="password"]:focus {
     outline: none;
-    border-color: #27ae60;
-    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
     background: white;
     transform: translateY(-1px);
 }
 
 /* Estilos para campos válidos/inválidos */
 .portal-form input.valid {
-    border-color: #27ae60;
-    background: rgba(39, 174, 96, 0.05);
+    border-color: #3498db;
+    background: rgba(52, 152, 219, 0.05);
 }
 
 .portal-form input.invalid {
@@ -200,8 +200,8 @@
 }
 
 .portal-form input[type="password"].senha-forte {
-    border-color: #27ae60;
-    background: rgba(39, 174, 96, 0.05);
+    border-color: #3498db;
+    background: rgba(52, 152, 219, 0.05);
 }
 
 /* Grupo de sexo */
@@ -210,15 +210,15 @@
     gap: 2rem;
     margin-top: 0.5rem;
     padding: 1rem;
-    background: rgba(39, 174, 96, 0.05);
+    background: rgba(52, 152, 219, 0.05);
     border-radius: 8px;
     border: 2px solid transparent;
     transition: all 0.3s ease;
 }
 
 .form-group .form-row:hover {
-    background: rgba(39, 174, 96, 0.1);
-    border-color: rgba(39, 174, 96, 0.3);
+    background: rgba(52, 152, 219, 0.1);
+    border-color: rgba(52, 152, 219, 0.3);
 }
 
 .form-group .form-row label {
@@ -233,14 +233,14 @@
 }
 
 .form-group .form-row label:hover {
-    background: rgba(39, 174, 96, 0.1);
+    background: rgba(52, 152, 219, 0.1);
     transform: translateY(-1px);
 }
 
 .form-group .form-row input[type="radio"] {
     width: 20px;
     height: 20px;
-    accent-color: #27ae60;
+    accent-color: #3498db;
     cursor: pointer;
     margin: 0;
 }
@@ -248,7 +248,7 @@
 /* Botão de submit personalizado */
 .portal-form .submit-btn {
     width: 100%;
-    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     padding: 1.2rem;
     border: none;
@@ -280,14 +280,14 @@
 }
 
 .portal-form .submit-btn:hover {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    background: linear-gradient(135deg, #2980b9, #3498db);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
 
 .portal-form .submit-btn:active {
     transform: translateY(0);
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .portal-form .submit-btn i {
@@ -308,13 +308,13 @@
 }
 
 .success-message {
-    background: #27ae60;
+    background: #3498db;
     color: white;
     padding: 1rem;
     border-radius: 8px;
     margin-bottom: 1rem;
     font-size: 0.9rem;
-    border-left: 4px solid #229954;
+    border-left: 4px solid #2980b9;
     transition: opacity 0.5s ease;
 }
 
@@ -367,7 +367,7 @@
 }
 
 .senha-indicator-bar.forte {
-    background: #27ae60;
+    background: #3498db;
     width: 100%;
 }
 

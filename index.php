@@ -97,19 +97,42 @@ if (!empty($anuncios_destaque)) {
 </head>
 
 <body class="portal-body">
-    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+    <button id="toggle-theme-desktop" class="theme-toggle-btn" title="Alternar tema">
       <i class="fa-solid fa-moon"></i>
     </button>
+    <div class="top-bar-mobile">
+      <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <button id="toggle-moedas" class="moedas-btn-mobile" title="Mostrar moedas e clima">
+        <i class="fas fa-coins"></i>
+      </button>
+      <a href="logar.php" class="login-btn-mobile">Entrar</a>
+    </div>
+    <div id="moedas-mobile-container" class="moedas-mobile-container">
+      <?php include './components/moedas.php'; ?>
+    </div>
+    
+    <!-- Carrossel horizontal de anúncios para mobile -->
+    <?php if (!empty($anuncios_ativos)): ?>
+    <div class="anuncios-ticker-horizontal" id="anuncios-ticker-horizontal">
+      <div class="anuncios-ticker-inner-horizontal">
+        <?php foreach ($anuncios_ativos as $an): ?>
+          <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-horizontal-banner">
+            <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
+            <?php if (!empty($an['nome'])): ?>
+              <span class="anuncio-horizontal-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
+            <?php endif; ?>
+          </a>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <?php endif; ?>
     
     <!-- Container com linhas verticais decorativas -->
     <div class="container-linhas-verticais">
       <div class="linha-vertical linha-vertical-esquerda"></div>
       <div class="linha-vertical linha-vertical-direita"></div>
-
-      <!-- Container flexível para previsão do tempo e moedas -->
-      <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin: 20px 0;">
-          <?php include './components/moedas.php'; ?>
-      </div>
 
       <!-- Botão de login fixo no topo direito -->
       <a href="logar.php" class="login-btn" style="position: fixed; right: 30px; top: 8px; z-index: 1100; font-size: 1rem; padding: 0.6rem 1.2rem;">Entrar</a>

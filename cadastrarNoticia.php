@@ -116,18 +116,11 @@ $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="form-group">
-                    <label for="imagem">
-                        <i class="fas fa-image"></i> Imagem de Capa (upload ou URL)
+                    <label for="imagem_url">
+                        <i class="fas fa-image"></i> Imagem de Capa (apenas URL)
                     </label>
-                    <div class="file-upload">
-                        <input type="file" name="imagem" id="imagem" accept="image/*">
-                        <label for="imagem" class="file-upload-label">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <span>Escolher arquivo</span>
-                        </label>
-                    </div>
                     <div style="margin-top: 1rem;">
-                        <input type="url" name="imagem_url" id="imagem_url" placeholder="Ou cole a URL da imagem aqui">
+                        <input type="url" name="imagem_url" id="imagem_url" placeholder="Cole a URL da imagem aqui">
                     </div>
                 </div>
 

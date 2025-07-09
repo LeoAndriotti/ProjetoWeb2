@@ -46,14 +46,7 @@ $dados = $usuario->ler();
 $noticias_usuario = $noticias->lerPorAutor($id_usuario);
 
 function saudacao() {
-    $hora = date('H');
-    if ($hora >= 6 && $hora < 12) {
-        return "Bom dia";
-    } elseif ($hora >= 12 && $hora < 18) {
-        return "Boa tarde";
-    } else {
-        return "Boa noite";
-    }
+    return "Boa noite";
 }
 
 // Buscar autores e categorias para o filtro
@@ -99,7 +92,7 @@ $todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="portal-header portal-header-portal">
         <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 150px; height: 130px;">
         <div class="portal-header-content">
-            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo $nome_usuario; ?>!</h1>
+            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo ucwords(strtolower($nome_usuario)); ?>!</h1>
             <div class="portal-nav">
                 <a href="alterar.php?id=<?php echo $id_usuario; ?>"><i class="fas fa-user-edit"></i> Editar Usuário</a>
                 <a href="indexUsuario.php"><i class="fas fa-sign-out-alt"></i> Voltar</a>

@@ -78,41 +78,36 @@ $todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="icon" href="./assets/img/logo.png" type="image/png">
 </head>
 <body class="portal-body">
-    <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+    <button id="toggle-theme-desktop" class="theme-toggle-btn" title="Alternar tema">
       <i class="fa-solid fa-moon"></i>
     </button>
-    <?php if (!empty($anuncios_ativos)): ?>
-    <div class="anuncios-ticker" style="width:100vw;overflow:hidden;background:rgba(0,0,0,0.7);margin-bottom:10px;">
-      <div class="anuncios-ticker-inner" style="display:flex;align-items:center;animation:anuncios-scroll 40s linear infinite;gap:40px;">
-        <?php foreach ($anuncios_ativos as $an): ?>
-          <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" style="display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none;min-width:320px;">
-            <?php if (!empty($an['imagem'])): ?>
-              <img src="<?php echo htmlspecialchars($an['imagem']); ?>" alt="Banner" style="height:48px;max-width:120px;border-radius:8px;object-fit:cover;">
-            <?php endif; ?>
-            <span style="font-size:1.1rem;font-weight:600;white-space:nowrap;"><?php echo htmlspecialchars($an['texto']); ?></span>
-          </a>
-        <?php endforeach; ?>
-      </div>
-      <style>
-        @keyframes anuncios-scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .anuncios-ticker-inner:hover { animation-play-state: paused; }
-      </style>
+    <div class="top-bar-mobile">
+      <button id="toggle-theme" class="theme-toggle-btn" title="Alternar tema">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <button id="toggle-moedas" class="moedas-btn-mobile" title="Mostrar moedas e clima">
+        <i class="fas fa-coins"></i>
+      </button>
+      <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+        <a href="portal.php" class="login-btn-mobile">Meu Portal</a>
+      <?php else: ?>
+        <a href="portalAnunciante.php" class="login-btn-mobile">Meu Portal</a>
+      <?php endif; ?>
+      <a href="logout.php" class="login-btn-mobile" style="margin-left: 8px; background: var(--btn-danger);">Sair</a>
     </div>
-    <?php endif; ?>
+    <div id="moedas-mobile-container" class="moedas-mobile-container moedas-container-unico">
+      <?php include './components/moedas.php'; ?>
+    </div>
+    <!-- Carrossel horizontal de anúncios abaixo do header removido -->
     <!-- Menu de moedas (reutilizável) -->
-    <?php include './components/moedas.php'; ?>
-    <!-- Botões de navegação do usuário -->
-    <div class="index-nav" style="position: fixed; right: 30px; top: 20px; z-index: 1100;">
-        <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
-            <a href="portal.php" class="login-btn">Meu Portal</a>
-        <?php else: ?>
-            <!-- Para outros tipos de usuário, mostra ambos os botões -->
-            <a href="portalAnunciante.php" class="login-btn">Meu Portal</a>
-        <?php endif; ?>
-        <a href="logout.php" class="logout-btn">Sair</a>
+    <!-- Botões de navegação do usuário no desktop -->
+    <div class="usuario-nav-desktop">
+      <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
+        <a href="portal.php" class="login-btn">Meu Portal</a>
+      <?php else: ?>
+        <a href="portalAnunciante.php" class="login-btn">Meu Portal</a>
+      <?php endif; ?>
+      <a href="logout.php" class="logout-btn">Sair</a>
     </div>
 
     <!-- Cabeçalho principal (pode ser expandido para navegação) -->

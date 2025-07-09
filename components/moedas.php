@@ -1,14 +1,11 @@
 <div class="currency-ticker">
-    <button class="hamburger" id="hamburger-currency" aria-label="Mostrar moedas" onclick="alternarMenuMoedas()">
-        <i class="fas fa-bars"></i>
-    </button>
+    <!-- Botão hamburger removido -->
     <div class="ticker-content" id="ticker-content">
-        
         <div class="ticker-items">
-              <!-- Componente de Previsão do Tempo -->
-         <div>
-        <?php echo renderizarPrevisaoTempo('São Paulo', 'BR'); ?>
-        </div>
+            <!-- Componente de Previsão do Tempo -->
+            <div>
+                <?php echo renderizarPrevisaoTempo('São Paulo', 'BR'); ?>
+            </div>
             <a class="ticker-item" href="https://www.google.com/search?q=usd&rlz=1C1GCEU_pt-BRBR1121BR1121&oq=usd&gs_lcrp=EgZjaHJvbWUyDwgAEEUYORiDARixAxiABDIMCAEQIxgnGIAEGIoFMgcIAhAAGIAEMgoIAxAAGLEDGIAEMg0IBBAAGIMBGLEDGIAEMgoIBRAAGLEDGIAEMg0IBhAAGIMBGLEDGIAEMg0IBxAAGIMBGLEDGIAEMgcICBAAGI8CMgcICRAAGI8C0gEHNzkxajBqN6gCCLACAfEFb8NRvOVfxCk&sourceid=chrome&ie=UTF-8" target="_blank">
                 <i class="fas fa-dollar-sign"></i>
                 <span class="currency-name">USD</span>
@@ -24,7 +21,7 @@
                 <span class="currency-name">BTC</span>
                 <span class="currency-value" id="btc-value">--</span>
             </a>
-            <a class="ticker-item" href="https://www.google.com/search?q=gbp&sca_esv=c450a65bf0db98a8&rlz=1C1GCEU_pt-BRBR1121BR1121&sxsrf=AE3TifOZY4x1BV7_3yELlBPLdQqk2mDBMg%3A1751590633336&ei=6SZnaKSoFMSc5OUP0sOT4Ao&ved=0ahUKEwjkwPfL_6GOAxVEDrkGHdLhBKwQ4dUDCBA&uact=5&oq=gbp&gs_lp=Egxnd3Mtd2l6LXNlcnAiA2dicDIKEAAYgAQYQxiKBTIKEAAYgAQYQxiKBTIQEAAYgAQYsQMYQxiDARiKBTIKEAAYgAQYQxiKBTIKEAAYgAQYQxiKBTIIEAAYgAQYsQMyChAAGIAEGEMYigUyCxAAGIAEGLEDGIMBMgoQABiABBhDGIoFMgsQLhiABBjHARivAUisC1CABVioCnACeAGQAQCYAY8BoAGIAqoBAzAuMrgBA8gBAPgBAZgCBKACoQKoAhTCAgcQIxiwAxgnwgIKEAAYsAMY1gQYR8ICDRAAGIAEGLADGEMYigXCAgcQIxgnGOoCwgINECMY8AUYJxjJAhjqAsICExAAGIAEGEMYtAIYigUY6gIYCtgBAcICBBAjGCfCAhIQIxjwBRiABBgTGCcYyQIYigXCAgoQIxiABBgnGIoFwgIIEC4YgAQYsQPCAhEQLhiABBixAxjRAxiDARjHAcICBRAAGIAEmAMJ8QWfWAlYeGCr24gGAZAGCroGBggBEAEYAZIHAzIuMqAHpBSyBwMwLjK4B5ECwgcFMi0zLjHIBxY&sclient=gws-wiz-serp" target="_blank">
+            <a class="ticker-item" href="https://www.google.com/search?q=gbp&sca_esv=c450a65bf0db98a8&rlz=1C1GCEU_pt-BRBR1121BR1121&sxsrf=AE3TifOZY4x1BV7_3yELlBPLdQqk2mDBMg%3A1751590633336&ei=6SZnaKSoFMSc5OUP0sOT4Ao&ved=0ahUKEwjkwPfL_6GOAxVEDrkGHdLhBKwQ4dUDCBA&uact=5&oq=gbp&gs_lp=Egxnd3Mtd2l6LXNlcnAiA2dicDIKEAAYgAQYQxiKBTIKEAAYgAQYQxiKBTIQEAAYgAQYsQMYQxiDARiKBTIKEAAYgAQYQxiKBTIKEAAYgAQYQxiKBTIIEAAYgAQYsQMyChAAGIAEGEMYigUyCxAAGIAEGLEDGIMBMgoQABiABBhDGIoFMgsQLhiABBjHARivAUisC1CABVioCnACeAGQAQCYAY8BoAGIAqoBAzAuMrgBA8gBAPgBAZgCBKACoQKoAhTCAgcQIxiwAxgnwgIKEAAYsAMY1gQYR8ICDRAAGIAEGLADGEMYigXCAgcQIxgnGOoCwgINECMY8AUYJxjJAhjqAsICExAAGIAEGEMYtAIYigUY6gIYCtgBAcICBBAjGCfCAhIQIxjwBRiABBgTGCcYyQIYigXCAgoQIxiABBgnGIoFwgIQEC4YgAQYxwEYJxiKBRivAcICCxAAGIAEGLEDGIMBwgIFEAAYgASYAwrxBVBZHilQx4TQiAYBkAYKugYGCAEQARgBkgcDMy4zoAenFrIHAzAuM7gHkwPCBwUyLTUuMcgHHg&sclient=gws-wiz-serp" target="_blank">
                 <i class="fas fa-pound-sign"></i>
                 <span class="currency-name">GBP</span>
                 <span class="currency-value" id="gbp-value">--</span>

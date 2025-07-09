@@ -1574,3 +1574,105 @@ body.dark-mode .login-btn {
     padding-right: 8px;
   }
 } 
+
+/* ====== MOBILE TOP BAR ====== */
+.top-bar-mobile {
+  display: none;
+}
+@media (max-width: 700px) {
+  .top-bar-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: var(--bg-card);
+    z-index: 3000;
+    padding: 6px 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .top-bar-mobile .theme-toggle-btn {
+    position: static;
+    margin: 0;
+    left: unset;
+    top: unset;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+    display: flex;
+  }
+  .theme-toggle-btn#toggle-theme-desktop {
+    display: none !important;
+  }
+  .moedas-btn-mobile {
+    background: var(--btn-main);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .login-btn-mobile {
+    background: var(--btn-main);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  }
+  .moedas-mobile-container {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100vw;
+    background: var(--bg-card);
+    z-index: 2999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 10px 0 6px 0;
+  }
+  .moedas-mobile-container.active {
+    display: block;
+  }
+  .login-btn-fixed {
+    display: none !important;
+  }
+} 
+
+@media (max-width: 700px) {
+  .moedas-mobile-container.active .ticker-content {
+    display: block !important;
+  }
+} 
+
+@media (max-width: 700px) {
+  .moedas-mobile-container {
+    top: 90px;
+  }
+} 
+
+.usuario-nav-desktop {
+  position: fixed;
+  right: 30px;
+  top: 8px;
+  z-index: 1100;
+  display: flex;
+  gap: 12px;
+}
+@media (max-width: 700px) {
+  .usuario-nav-desktop {
+    display: none !important;
+  }
+} 

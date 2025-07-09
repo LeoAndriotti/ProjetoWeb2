@@ -66,14 +66,7 @@ $categorias = $categoria->lerTodas();
 $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
 $nome_usuario = $dados_usuario ? $dados_usuario['nome'] : '';
 function saudacao() {
-    $hora = date('H');
-    if ($hora >= 6 && $hora < 12) {
-        return "Bom dia";
-    } elseif ($hora >= 12 && $hora < 18) {
-        return "Boa tarde";
-    } else {
-        return "Boa noite";
-    }
+    return "Boa noite";
 }
 ?>
 
@@ -98,7 +91,7 @@ function saudacao() {
     <div class="portal-header portal-header-portal">
         <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 150px; height: 130px;">
         <div class="portal-header-content">
-            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo $nome_usuario; ?>!</h1>
+            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo ucwords(strtolower($nome_usuario)); ?>!</h1>
             <div class="portal-nav">
                 <a href="portal.php"><i class="fas fa-arrow-left"></i> Voltar ao Portal</a>
                 <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
@@ -148,15 +141,9 @@ function saudacao() {
                                 <p>Imagem atual</p>
                             </div>
                         <?php endif; ?>
-                        <div class="new-image">
-                            <input type="file" id="imagem" name="imagem" accept="image/*">
-                            <div class="image-preview" id="image-preview">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>Clique para selecionar uma nova imagem</p>
-                            </div>
-                        </div>
+                        
                         <div style="margin-top: 1rem;">
-                            <input type="url" name="imagem_url" id="imagem_url" placeholder="Ou cole a URL da imagem aqui">
+                            <input type="url" name="imagem_url" id="imagem_url" placeholder="Cole a URL da imagem aqui">
                         </div>
                     </div>
                 </div>

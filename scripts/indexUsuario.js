@@ -101,40 +101,56 @@ window.addEventListener('click', function(event) {
 
 // Dark mode functionality - wrapped in DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
-    const btn = document.getElementById('toggle-theme');
-    
-    if (!btn) {
-        console.error('Botão de tema não encontrado');
-        return;
-    }
-    
-    function updateThemeBtn() {
-        if (document.body.classList.contains('dark-mode')) {
-            btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
-        } else {
-            btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
-        }
-    }
-    
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const savedTheme = localStorage.getItem('theme');
-    
-    if (savedTheme) {
-        document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-        document.body.classList.toggle('light-mode', savedTheme === 'light');
-    } else if (prefersDark) {
-        document.body.classList.add('dark-mode');
+  // Dark mode para desktop
+  var btnDesktop = document.getElementById('toggle-theme-desktop');
+  var btnMobile = document.getElementById('toggle-theme');
+  function updateThemeBtn(btn) {
+    if (!btn) return;
+    if (document.body.classList.contains('dark-mode')) {
+      btn.innerHTML = '<i class="fa-solid fa-sun"></i>';
     } else {
-        document.body.classList.add('light-mode');
+      btn.innerHTML = '<i class="fa-solid fa-moon"></i>';
     }
-    
-    updateThemeBtn();
-    
-    btn.onclick = function() {
-        document.body.classList.toggle('dark-mode');
-        document.body.classList.toggle('light-mode');
-        const theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
-        localStorage.setItem('theme', theme);
-        updateThemeBtn();
+  }
+  function syncThemeBtns() {
+    updateThemeBtn(btnDesktop);
+    updateThemeBtn(btnMobile);
+  }
+  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    document.body.classList.toggle('light-mode', savedTheme === 'light');
+  } else if (prefersDark) {
+    document.body.classList.add('dark-mode');
+  } else {
+    document.body.classList.add('light-mode');
+  }
+  syncThemeBtns();
+  if (btnDesktop) {
+    btnDesktop.onclick = function() {
+      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('light-mode');
+      var theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      syncThemeBtns();
     };
+  }
+  if (btnMobile) {
+    btnMobile.onclick = function() {
+      document.body.classList.toggle('dark-mode');
+      document.body.classList.toggle('light-mode');
+      var theme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+      localStorage.setItem('theme', theme);
+      syncThemeBtns();
+    };
+  }
+  // Lógica para mostrar/esconder moedas/clima no mobile
+  var moedasBtn = document.getElementById('toggle-moedas');
+  var moedasContainer = document.getElementById('moedas-mobile-container');
+  if (moedasBtn && moedasContainer) {
+    moedasBtn.addEventListener('click', function() {
+      moedasContainer.classList.toggle('active');
+    });
+  }
 });

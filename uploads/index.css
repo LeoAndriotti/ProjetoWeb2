@@ -466,3 +466,94 @@ body.dark-mode .ultimas-noticias h2 {
   @media (max-width: 800px) {
     .carrossel-vertical { display: none; }
   }
+
+.anuncios-ticker-horizontal {
+  display: none;
+  width: 100vw;
+  overflow-x: auto;
+  background: rgba(0,0,0,0.7);
+  margin: 0 auto 18px auto;
+  padding: 12px 0 10px 0;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.10);
+  scrollbar-width: thin;
+  scrollbar-color: #3498db #222;
+}
+@media (max-width: 800px) {
+  .anuncios-ticker-horizontal {
+    display: block;
+    margin-top: 70px;
+  }
+}
+.anuncios-ticker-inner-horizontal {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-width: 600px;
+  padding: 0 24px;
+}
+.anuncio-horizontal-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #181c24;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  text-decoration: none;
+  min-width: 180px;
+  max-width: 220px;
+  padding: 10px 12px 8px 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  border: 2px solid #23272f;
+}
+.anuncio-horizontal-banner img {
+  width: 100%;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #222;
+  margin-bottom: 8px;
+}
+.anuncio-horizontal-texto {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 2px;
+  text-shadow: 0 2px 8px #000, 0 1px 0 #222;
+}
+.anuncio-horizontal-banner:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 6px 24px rgba(52,152,219,0.18);
+  border-color: #3498db;
+}
+@media (max-width: 700px) {
+  .anuncios-ticker-inner-horizontal {
+    gap: 16px;
+    padding: 0 8px;
+  }
+  .anuncio-horizontal-banner {
+    min-width: 140px;
+    max-width: 180px;
+    padding: 8px 6px 6px 6px;
+  }
+  .anuncio-horizontal-banner img {
+    height: 60px;
+  }
+  .anuncio-horizontal-texto {
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .moedas-mobile-container .currency-ticker {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    z-index: auto !important;
+    box-shadow: none !important;
+    border-radius: 12px;
+    margin: 0;
+  }
+}

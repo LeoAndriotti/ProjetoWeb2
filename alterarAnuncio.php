@@ -64,14 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $nome_usuario = $dados_usuario ? $dados_usuario['nome'] : '';
 
 function saudacao() {
-    $hora = date('H');
-    if ($hora >= 6 && $hora < 12) {
-        return "Bom dia";
-    } elseif ($hora >= 12 && $hora < 18) {
-        return "Boa tarde";
-    } else {
-        return "Boa noite";
-    }
+    return "Boa noite";
 }
 ?>
 
@@ -96,7 +89,7 @@ function saudacao() {
     <div class="portal-header portal-header-portal">
         <img src="./assets/img/logo2.png" alt="CSL Times" class="portal-logo-img" style="width: 150px; height: 130px;">
         <div class="portal-header-content">
-            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo $nome_usuario; ?>!</h1>
+            <h1><span class="saudacao-portal"><?php echo saudacao(); ?></span>, <?php echo ucwords(strtolower($nome_usuario)); ?>!</h1>
             <div class="portal-nav">
                 <a href="portalAnunciante.php"><i class="fas fa-arrow-left"></i> Voltar ao Portal</a>
                 <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
