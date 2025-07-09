@@ -33,8 +33,8 @@ $categorias = $categoria->lerTodas();
 
 // Lógica de filtro
 $filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
-$filtro_autor = isset($_GET['autor']) ? $_GET['autor'] : '';
-$filtro_categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+$filtro_autor = isset($_GET['autor']) ? trim($_GET['autor']) : '';
+$filtro_categoria = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
 
 $query = "SELECT * FROM noticias WHERE 1=1";
 $params = [];
@@ -43,11 +43,11 @@ if ($filtro_titulo !== '') {
     $params[] = "%$filtro_titulo%";
 }
 if ($filtro_autor !== '') {
-    $query .= " AND autor = ?";
+    $query .= " AND autor_id = ?";
     $params[] = $filtro_autor;
 }
 if ($filtro_categoria !== '') {
-    $query .= " AND categoria = ?";
+    $query .= " AND categoria_id = ?";
     $params[] = $filtro_categoria;
 }
 $query .= " ORDER BY data DESC, id DESC";
@@ -119,78 +119,69 @@ if (!empty($anuncios_destaque)) {
               <!-- Espaço reservado para conteúdo do cabeçalho -->
           </div>
       </header>
-      <!-- Filtro de busca -->
-      <form method="get" class="filtro-busca-form">
-        <div>
-            <label for="titulo"><i class="fa-solid fa-heading"></i> Título:</label>
-            <input type="text" name="titulo" id="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Buscar por título...">
-        </div>
-        <div>
-            <label for="autor"><i class="fa-solid fa-user"></i> Autor:</label>
-            <select name="autor" id="autor">
-                <option value="">Todos</option>
-                <?php foreach ($autores as $a): ?>
-                    <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div>
-            <label for="categoria"><i class="fa-solid fa-list"></i> Categoria:</label>
-            <select name="categoria" id="categoria">
-                <option value="">Todas</option>
-                <?php foreach ($categorias as $cat): ?>
-                    <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <button type="submit" class="submit-btn" style="height: 40px;"><i class="fa-solid fa-filter"></i> Filtrar</button>
-      </form>
-
+      
       <!-- Carrosseis verticais de anúncios ativos nas laterais -->
       <?php if (!empty($anuncios_ativos)): ?>
-      <div class="carrossel-vertical carrossel-vertical-esquerda">
-        <div class="carrossel-vertical-inner" id="carrossel-vertical-esquerda">
-          <?php foreach ($anuncios_ativos as $an): ?>
-            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
-              <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
-              <?php if (!empty($an['nome'])): ?>
+        <div class="carrossel-vertical carrossel-vertical-esquerda">
+          <div class="carrossel-vertical-inner" id="carrossel-vertical-esquerda">
+            <?php foreach ($anuncios_ativos as $an): ?>
+              <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
+                <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
+                <?php if (!empty($an['nome'])): ?>
                 <span class="anuncio-vertical-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
-              <?php endif; ?>
-            </a>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <div class="carrossel-vertical carrossel-vertical-direita">
-        <div class="carrossel-vertical-inner" id="carrossel-vertical-direita">
-          <?php foreach ($anuncios_ativos as $an): ?>
-            <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
-              <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
-              <?php if (!empty($an['nome'])): ?>
-                <span class="anuncio-vertical-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
-              <?php endif; ?>
-            </a>
-          <?php endforeach; ?>
-        </div>
-      </div>
-      <?php endif; ?>
-
-      <main class="news-container">
-        <!-- Seção de destaque com logo e slogan -->
-        <section class="featured-news" style="text-align:center;">
-            <img src="./assets/img/logo2.png" alt="Logo CSL Times" class="logo-img" style="display:block;margin:0 auto 10px auto;max-width:250px;">
-            <h2>CSL Times - Your window to the world!</h2>
-            <?php if (empty($todas_noticias)): ?>
-                <!-- Mensagem caso não haja notícias cadastradas -->
-                <div class="empty-state">
-                    <p>Publique a sua notícia, acessando o portal!</p>
+                <?php endif; ?>
+              </a>
+              <?php endforeach; ?>
+            </div>
+          </div>
+          <div class="carrossel-vertical carrossel-vertical-direita">
+            <div class="carrossel-vertical-inner" id="carrossel-vertical-direita">
+              <?php foreach ($anuncios_ativos as $an): ?>
+                <a href="<?php echo htmlspecialchars($an['link']); ?>" target="_blank" class="anuncio-vertical-banner">
+                  <img src="<?php echo !empty($an['imagem']) ? htmlspecialchars($an['imagem']) : './assets/img/logo2.png'; ?>" alt="Banner" />
+                  <?php if (!empty($an['nome'])): ?>
+                    <span class="anuncio-vertical-texto"><?php echo htmlspecialchars($an['nome']); ?></span>
+                    <?php endif; ?>
+                  </a>
+                  <?php endforeach; ?>
                 </div>
-            <?php endif; ?>
-        </section>
-
-        <!-- Seção das últimas notícias -->
-        <section class="ultimas-noticias">
-            <h2>Últimas Notícias</h2>
-            <?php if (!empty($ultimas_noticias)): ?>
+              </div>
+              <?php endif; ?>
+              
+              <main class="news-container">
+                <!-- Seção de destaque com logo e slogan -->
+                <section class="featured-news" style="text-align:center;">
+                  <img src="./assets/img/logo2.png" alt="Logo CSL Times" class="logo-img" style="display:block;margin:0 auto 10px auto;max-width:250px;">
+                  <h2>CSL Times - Your window to the world!</h2>
+                  <?php if (empty($todas_noticias)): ?>
+                    <!-- Mensagem caso não haja notícias cadastradas -->
+                    <div class="empty-state">
+                      <p>Publique a sua notícia, acessando o portal!</p>
+                    </div>
+                    <?php endif; ?>
+                  </section>
+                  
+                  <!-- Seção das últimas notícias -->
+                  <section class="ultimas-noticias">
+                    <h2>Últimas Notícias</h2>
+                    <!-- Filtro de busca -->
+                    <form method="get" style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 18px;">
+                        <input type="text" name="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Título" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem; min-width: 120px;">
+                        <select name="autor" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem;">
+                            <option value="">Autor</option>
+                            <?php foreach ($autores as $a): ?>
+                                <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <select name="categoria" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem;">
+                            <option value="">Categoria</option>
+                            <?php foreach ($categorias as $cat): ?>
+                                <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" style="padding: 4px 16px; border-radius: 4px; background: #2196f3; color: #fff; border: none; font-size: 0.95rem; cursor: pointer;">Filtrar</button>
+                    </form>
+                    <?php if (!empty($ultimas_noticias)): ?>
                 <div class="news-grid">
                     <!-- Renderiza cada notícia usando o componente reutilizável -->
                     <?php foreach ($todas_noticias as $noticia): ?>

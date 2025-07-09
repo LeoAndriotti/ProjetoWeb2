@@ -32,8 +32,41 @@ if (isset($_SESSION['usuario_id'])) {
 
 // Busca todas as notícias do banco
 $todas_noticias = $noticias->ler();
+if (isset($_GET['busca']) && $_GET['busca'] !== '') {
+    $busca = strtolower($_GET['busca']);
+    $todas_noticias = array_filter($todas_noticias, function($noticia) use ($busca) {
+        return strpos(strtolower($noticia['titulo']), $busca) !== false;
+    });
+}
 $anuncios_ativos = $anuncio->lerAtivos();
 
+// Buscar autores e categorias para o filtro
+$autores = $usuario->ler();
+$categorias = $categoria->lerTodas();
+
+// Lógica de filtro
+$filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
+$filtro_autor = isset($_GET['autor']) ? trim($_GET['autor']) : '';
+$filtro_categoria = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
+
+$query = "SELECT * FROM noticias WHERE 1=1";
+$params = [];
+if ($filtro_titulo !== '') {
+    $query .= " AND titulo LIKE ?";
+    $params[] = "%$filtro_titulo%";
+}
+if ($filtro_autor !== '') {
+    $query .= " AND autor_id = ?";
+    $params[] = $filtro_autor;
+}
+if ($filtro_categoria !== '') {
+    $query .= " AND categoria_id = ?";
+    $params[] = $filtro_categoria;
+}
+$query .= " ORDER BY data DESC, id DESC";
+$stmt = $banco->prepare($query);
+$stmt->execute($params);
+$todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -41,6 +74,7 @@ $anuncios_ativos = $anuncio->lerAtivos();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSL Times - Usuário</title>
+    
     <!-- Estilos principais do site -->
     <link rel="stylesheet" href="./uploads/style.css">
     <link rel="stylesheet" href="./uploads/Index.css">
@@ -78,7 +112,7 @@ $anuncios_ativos = $anuncio->lerAtivos();
     <!-- Menu de moedas (reutilizável) -->
     <?php include './components/moedas.php'; ?>
     <!-- Botões de navegação do usuário -->
-    <div class="index-nav" style="position: absolute; right: 30px; top: 20px; z-index: 1100;">
+    <div class="index-nav" style="position: fixed; right: 30px; top: 20px; z-index: 1100;">
         <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
             <a href="portal.php" class="login-btn">Meu Portal</a>
         <?php else: ?>
@@ -100,6 +134,24 @@ $anuncios_ativos = $anuncio->lerAtivos();
         <section class="featured-news" style="text-align:center;">
             <img src="./assets/img/logo2.png" alt="Logo CSL Times" class="logo-img" style="display:block;margin:0 auto 10px auto;max-width:250px;">
             <h2>CSL Times - Your window to the world!</h2>
+                <!-- Filtro de busca -->
+                <form method="get" style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 18px;">
+                        <input type="text" name="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Título" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem; min-width: 120px;">
+                        <select name="autor" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem;">
+                            <option value="">Autor</option>
+                            <?php foreach ($autores as $a): ?>
+                                <option value="<?= $a['id'] ?>" <?= $filtro_autor == $a['id'] ? 'selected' : '' ?>><?= htmlspecialchars($a['nome']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <select name="categoria" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem;">
+                            <option value="">Categoria</option>
+                            <?php foreach ($categorias as $cat): ?>
+                                <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" style="padding: 4px 16px; border-radius: 4px; background: #2196f3; color: #fff; border: none; font-size: 0.95rem; cursor: pointer;">Filtrar</button>
+                    </form>
+   
             <?php if (empty($todas_noticias)): ?>
                 <!-- Mensagem caso não haja notícias cadastradas -->
                 <div class="empty-state">

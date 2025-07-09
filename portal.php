@@ -25,6 +25,7 @@ if (isset($_GET['deletar'])) {
     exit();
 }
 
+
 $dados_usuario = $usuario->lerPorId($_SESSION['usuario_id']);
 if ($dados_usuario) {
     $nome_usuario = $dados_usuario['nome'];
@@ -45,6 +46,13 @@ if ($dados_usuario) {
 $dados = $usuario->ler();
 $noticias_usuario = $noticias->lerPorAutor($id_usuario);
 
+// Carregar categorias para o filtro
+if (method_exists($categoria, 'lerTodas')) {
+    $categorias = $categoria->lerTodas();
+} else {
+    $categorias = $categoria->ler();
+}
+
 function saudacao() {
     $hora = date('H');
     if ($hora >= 6 && $hora < 12) {
@@ -55,6 +63,26 @@ function saudacao() {
         return "Boa noite";
     }
 }
+$filtro_titulo = isset($_GET['titulo']) ? trim($_GET['titulo']) : '';
+$filtro_categoria = isset($_GET['categoria']) ? trim($_GET['categoria']) : '';
+
+$query = "SELECT * FROM noticias WHERE 1=1";
+$params = [];
+if ($filtro_titulo !== '') {
+    $query .= " AND titulo LIKE ?";
+    $params[] = "%$filtro_titulo%";
+}
+
+if ($filtro_categoria !== '') {
+    $query .= " AND categoria_id = ?";
+    $params[] = $filtro_categoria;
+}
+$query .= " ORDER BY data DESC, id DESC";
+$stmt = $banco->prepare($query);
+$stmt->execute($params);
+$todas_noticias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
 ?>
 <!-- ====== INÍCIO DO HTML ====== -->
 <!DOCTYPE html>
@@ -105,6 +133,7 @@ function saudacao() {
                 Suas Publicações
             <?php endif; ?>
         </h2>
+        
         <?php if (empty($noticias_usuario)): ?>
             <div class="empty-state">
                 <?php if (strtolower($tipo_usuario) === 'jornalista'): ?>
@@ -116,11 +145,24 @@ function saudacao() {
                 <?php endif; ?>
             </div>
         <?php else: ?>
+               <!-- Filtro de busca -->
+               <form method="get" style="display: flex; gap: 8px; justify-content: center; align-items: center; margin-bottom: 18px;">
+                        <input type="text" name="titulo" value="<?= htmlspecialchars($filtro_titulo) ?>" placeholder="Título" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem; min-width: 120px;">
+                        <select name="categoria" style="padding: 4px 8px; border-radius: 4px; border: 1px solid #bbb; font-size: 0.95rem;">
+                            <option value="">Categoria</option>
+                            <?php foreach ($categorias as $cat): ?>
+                                <option value="<?= $cat['id'] ?>" <?= $filtro_categoria == $cat['id'] ? 'selected' : '' ?>><?= htmlspecialchars($cat['nome']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <button type="submit" style="padding: 4px 16px; border-radius: 4px; background: #2196f3; color: #fff; border: none; font-size: 0.95rem; cursor: pointer;">Filtrar</button>
+                    </form>
+   
             <div class="news-grid">
                 <?php foreach ($noticias_usuario as $noticia): 
                     $cat = $categoria->lerPorId($noticia['categoria']);
                     $noticia['categoria_nome'] = $cat['nome'] ?? 'Sem categoria';
                 ?>
+            
                     <article class="news-card" onclick="abrirModalNoticia(<?php echo htmlspecialchars(json_encode($noticia)); ?>)">
                         <?php if (!empty($noticia['imagem'])): ?>
                             <div class="news-image">

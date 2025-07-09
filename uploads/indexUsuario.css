@@ -10,6 +10,7 @@
     transition: all 0.3s ease;
     text-decoration: none;
     display: inline-block;
+
 }
 
 .logout-btn:hover {
@@ -32,6 +33,7 @@
     text-decoration: none;
     display: inline-block;
     margin-left: auto;
+    
 }
 
 .login-btn:hover {
